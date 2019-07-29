@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/core/path.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/core/path.php';
 require_once DB;
 require_once TRAITS . 'MakeInt.php';
 require_once TRAITS . 'MakeString.php';
