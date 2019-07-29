@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { BACKEND } from './../path.js'
+
 import DashboardView from './views/DashboradView'
 
 
@@ -9,29 +11,33 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            registryLoading: 1
+            registryLoading: 1,
         }
+        
+        this.getRegistry()
+
     }
 
 
     getRegistry() {
-        const URL = 'http://arenda/backend/getRegistry.php'
+        const URL = `${BACKEND}getRegistry.php`
         const OPTIONS = {
-            method: 'POST',
-            body: {}
+            mode: 'cors',
+            method: 'POST'
         }
 
-        // fetch(URL, OPTIONS)
-        //     .then(response => response.json())
-        //     .then(response => {
-        //         console.log(response)
-        //     })
+        fetch(URL,OPTIONS)
+            .then(response => response.json())
+            .then(response => {
+                this.props.onSetRegistry(response)
+                this.setState({registryLoading: 0})
+            })
     }
 
 
     render() {
         return (
-            <DashboardView registryLoading={this.state.registryLoading}/>
+            <DashboardView registryLoading={this.state.registryLoading} registry={this.props.registry}/>
         )
     }
 }

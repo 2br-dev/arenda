@@ -6,20 +6,40 @@ import './../../assets/css/Dashboard.css'
 
 
 const DashboardView = props => {
-
     let registryContent = <Loader />
-    // if(props.registryLoading === 0) {
-    //     if(props.registry.)
-    // }
+    if(props.registryLoading === 0) {
+        if(props.registry.length === 0) {
+            registryContent = <p className="registry__empty">Реестр пуст</p>
+        } else {           
+            registryContent = (
+                <div className="registry__table">
+                    {props.registry.map(user => {
+                        return
+                            // <p className="registry__name">{user.name}</p>
+                            {user.map(contract => {
+
+                            })}
+                    })}
+                </div>
+            )  
+
+                registryContent = (props) => { 
+                    return (
+                        <div className="registry__table">
+                            
+                        </div> 
+                    )
+                }
+        }
+    }
 
     return (
         <div className="content">
             <div className="content__body __center">
                 <section className="registry">
                     <p className="registry__title">Реестр</p>
-                    <div className="registry__table">
-                        {registryContent}
-                        {/* <p className="registry__empty">Реестр пуст</p>
+                    {registryContent}
+                    {/* <div className="registry__table">
                         <p className="registry__name">Имя пользователя</p>
                         <div className="registry__box">
                             <p className="registry__sub-name">Название договора</p>
@@ -41,8 +61,8 @@ const DashboardView = props => {
                                 <p className="registry__sub-sub-name">Название Счета</p>
                             </div>
                         </div>
-                        <hr className="registry__hr"/> */}
-                    </div>
+                        <hr className="registry__hr"/> 
+                    </div> */}
                 </section>
             </div>
         </div>
