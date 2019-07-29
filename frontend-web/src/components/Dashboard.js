@@ -15,8 +15,17 @@ class Dashboard extends React.Component {
 
 
     getRegistry() {
-        const URL = 
+        const URL = 'http://arenda/backend/getRegistry.php'
+        const OPTIONS = {
+            method: 'POST',
+            body: {}
+        }
+
         // fetch(URL, OPTIONS)
+        //     .then(response => response.json())
+        //     .then(response => {
+        //         console.log(response)
+        //     })
     }
 
 
