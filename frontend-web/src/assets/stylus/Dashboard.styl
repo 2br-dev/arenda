@@ -1,3 +1,97 @@
 @import './props.styl'
 
 
+.content
+    padding: 20px
+
+@media screen and (max-width: 1000px)
+    .content
+        padding: 10px
+
+
+.registry
+    border-radius: 5px
+    background: columns 2px
+    padding: 20px
+    box-shadow: 0px 0px 5px 0px color_4
+
+    &__empty
+        padding: 100px 0
+        text-align: center
+        font-size: 20px; 
+
+    &__hr
+        background: color_4
+        height 2px
+        border: 0
+        margin: 20px 0 0 0
+
+    &__title
+        font-size: 20px
+        font-weight: 700
+        color: color_1
+
+    &__table
+        margin: 20px 0 0 0
+
+    &__name
+        font-size: 18px
+        color: color_1
+        font-weight: 500
+        margin: 20px 0 0 0
+        &:first-child
+            margin: 0
+
+    &__sub-name
+        font-size: 18px
+        margin: 20px 0 0 0
+        color: color_1
+        transition: tDelay
+        &:first-child
+            margin: 0
+        &:hover:not(.modile) + ^[0]__sub-box
+            background: color_4
+
+
+    &__sub-sub-name
+        font-size: 16px
+        margin: 5px 0 0 0
+        color: color_1
+        &:first-child
+            margin: 0
+
+    &__box
+        border-left: 2px solid color_4
+        padding: 0 10px
+        margin: 20px 0 0 0
+
+    
+    &__sub-box
+        border-left: 2px solid color_4
+        padding: 5px 10px
+        margin: 5px 0 0 0
+        &:hover
+            background: color_4
+
+@media screen and (max-width: 1000px)
+    .registry
+        padding: 10px
+
+        &__empty
+            padding: 50px 0
+            font-size: 14px; 
+
+        &__title
+            font-size: 16px
+
+        &__table
+            margin: 20px 0 0 0
+
+        &__name
+            font-size: 14px
+
+        &__sub-name
+            font-size: 14px
+
+        &__sub-sub-name
+            font-size: 12px

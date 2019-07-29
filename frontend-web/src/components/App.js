@@ -34,4 +34,26 @@ class App extends React.Component {
 }
 
 
+/** В зависимости от размера экрана раздает класс .mobile (для :hover) */
+window.onload = () => {
+	
+	const resizer = () => {
+		const APP = document.querySelector('.app')
+		const NODES = APP.querySelectorAll('*')
+		if(window.innerWidth <= 1000) {
+			NODES.forEach(node => {
+				node.classList.add('mobile')
+			})
+		} else {
+			NODES.forEach(node => {
+				node.classList.remove('mobile')
+			})
+		}
+	}
+	
+	window.addEventListener("resize", resizer)
+	resizer()
+}
+
+
 export default App

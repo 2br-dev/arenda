@@ -8,7 +8,8 @@ const HeaderView = props => {
     return (
         <header className="header">
             <div className="header__body __center">
-                <Link to="/" className="header__logo">На главную</Link>
+                <Link to="/" className="header__logo">Лого</Link>
+                <a className="header__btn">Выход</a>
             </div>
         </header>
         

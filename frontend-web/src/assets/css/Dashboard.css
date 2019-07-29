@@ -1,0 +1,99 @@
+.content {
+  padding: 20px;
+}
+@media screen and (max-width: 1000px) {
+  .content {
+    padding: 10px;
+  }
+}
+.registry {
+  border-radius: 5px;
+  background: columns 2px;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 0px #eee;
+}
+.registry__empty {
+  padding: 100px 0;
+  text-align: center;
+  font-size: 20px;
+}
+.registry__hr {
+  background: #eee;
+  height: 2px;
+  border: 0;
+  margin: 20px 0 0 0;
+}
+.registry__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+.registry__table {
+  margin: 20px 0 0 0;
+}
+.registry__name {
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+  margin: 20px 0 0 0;
+}
+.registry__name:first-child {
+  margin: 0;
+}
+.registry__sub-name {
+  font-size: 18px;
+  margin: 20px 0 0 0;
+  color: #333;
+  transition: 0.2s;
+}
+.registry__sub-name:first-child {
+  margin: 0;
+}
+.registry__sub-name:hover:not(.modile) + .registry__sub-box {
+  background: #eee;
+}
+.registry__sub-sub-name {
+  font-size: 16px;
+  margin: 5px 0 0 0;
+  color: #333;
+}
+.registry__sub-sub-name:first-child {
+  margin: 0;
+}
+.registry__box {
+  border-left: 2px solid #eee;
+  padding: 0 10px;
+  margin: 20px 0 0 0;
+}
+.registry__sub-box {
+  border-left: 2px solid #eee;
+  padding: 5px 10px;
+  margin: 5px 0 0 0;
+}
+.registry__sub-box:hover {
+  background: #eee;
+}
+@media screen and (max-width: 1000px) {
+  .registry {
+    padding: 10px;
+  }
+  .registry__empty {
+    padding: 50px 0;
+    font-size: 14px;
+  }
+  .registry__title {
+    font-size: 16px;
+  }
+  .registry__table {
+    margin: 20px 0 0 0;
+  }
+  .registry__name {
+    font-size: 14px;
+  }
+  .registry__sub-name {
+    font-size: 14px;
+  }
+  .registry__sub-sub-name {
+    font-size: 12px;
+  }
+}
