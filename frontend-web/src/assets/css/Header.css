@@ -1,0 +1,13 @@
+.header {
+  background: #1976d2;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.header__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
