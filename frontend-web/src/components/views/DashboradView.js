@@ -10,26 +10,8 @@ const DashboardView = props => {
     if(props.registryLoading === 0) {
         if(props.registry.length === 0) {
             registryContent = <p className="registry__empty">Реестр пуст</p>
-        } else {           
-            registryContent = (
-                <div className="registry__table">
-                    {props.registry.map(user => {
-                        return
-                            // <p className="registry__name">{user.name}</p>
-                            {user.map(contract => {
-
-                            })}
-                    })}
-                </div>
-            )  
-
-                registryContent = (props) => { 
-                    return (
-                        <div className="registry__table">
-                            
-                        </div> 
-                    )
-                }
+        } else {          
+            registryContent = <ViewRegistry data={props.registry} />
         }
     }
 
@@ -39,30 +21,6 @@ const DashboardView = props => {
                 <section className="registry">
                     <p className="registry__title">Реестр</p>
                     {registryContent}
-                    {/* <div className="registry__table">
-                        <p className="registry__name">Имя пользователя</p>
-                        <div className="registry__box">
-                            <p className="registry__sub-name">Название договора</p>
-                            <div className="registry__sub-box">
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                            </div>
-                            <p className="registry__sub-name">Название договора</p>
-                            <div className="registry__sub-box">
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                            </div>
-                            <p className="registry__sub-name">Название договора</p>
-                            <div className="registry__sub-box">
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                                <p className="registry__sub-sub-name">Название Счета</p>
-                            </div>
-                        </div>
-                        <hr className="registry__hr"/> 
-                    </div> */}
                 </section>
             </div>
         </div>
@@ -71,3 +29,49 @@ const DashboardView = props => {
 
 
 export default DashboardView
+
+
+const ViewRegistry = props => {
+    return props.data.map((user, key) => 
+        <div key={`user_${key}`} className="registry__user">
+            <div className="registry__user_box-flex">
+                <p className="registry__user_name">{user.name}</p>
+                {user.status === 1 
+                    ? <p className="registry__user_status registry__user_status-active">Активный</p>
+                    : <p className="registry__user_status registry__user_status-no-active">Не активный</p>
+                }
+            </div>
+            <ViewContracts data={user.contracts}/>
+        </div>
+    )
+}
+
+const ViewContracts = props => {
+    return props.data.map((contract, key) => 
+        <div key={`contract_${key}`} className="registry__contract">
+            <div className="registry__contract_box-flex">
+                <p className="registry__contract_name">{contract.name}</p>
+                <p className="registry__contract_date">{contract.dateOpening} / {contract.dateClosure}</p>
+                {contract.status === 1 
+                    ? <p className="registry__contract_status registry__contract_status-active">Активный</p>
+                    : <p className="registry__contract_status registry__contract_status-no-active">Не активный</p>
+                }
+            </div>
+            <ViewInvoices data={contract.invoices}/>
+        </div>
+    )
+}
+
+const ViewInvoices = props => {
+    return props.data.map((invoice, key) => 
+        <div key={`invoice_${key}`} className="registry__invoice">
+            <p className="registry__invoice_date">Счет от: {invoice.date}</p>
+            <p className="registry__invoice_amount">На сумму: {invoice.amount} р.</p>
+            {invoice.status === 1 
+                ? <p className="registry__invoice_status registry__invoice_status-paid">Оплачен</p>
+                : <p className="registry__invoice_status registry__invoice_status-no-paid">Не оплачен</p>
+            }
+        </div>
+    )
+}
+
