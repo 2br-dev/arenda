@@ -24,28 +24,32 @@ class Users
     {   
         $this->DB = DB::connect();
         //
-        if(!is_null($userId)) {
-            $this->userId = $userId;
+        if(!is_null($userId) && (int) $userId > 0) {
+            $this->userId = (int) $userId;
         }
     }
 
 
+    /** Возвращает id пользователя
+     * @return int
+    */
+    public function getUserId() {
+        return $this->userId;
+    }
+
+
     /** Возвращает пользователя или всех пользователей
-     * @param int $userId
+     * @param array $props - пораметры фильтра
      * @return array
     */
-    public function getUser($userId = NULL) 
+    public function getUser($props = []) 
     {
-        if(!is_null($userId)) {
-            $userId = $this->makeInt($userId);
-        }
-
         $query = 'SELECT * FROM ' . self::$table;
         $params = [];
         
         $flagAnd = false;
         
-        if(!is_null($userId)) {
+        if(!is_null($this->userId)) {
             // Проверка наличия WHERE
             if(!$flagAnd) {
                 $query .= ' WHERE';
@@ -54,7 +58,7 @@ class Users
             }
             
             $query .= ' id = :id';
-            $params[':id'] = $userId;
+            $params[':id'] = $this->userId;
             
             $flagAnd = true;
         }
