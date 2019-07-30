@@ -8,4 +8,6 @@ require_once CLASSES . 'Invoices.php';
 require_once CLASSES . 'Payments.php';
 require_once CLASSES . 'Balance.php';
 
+require_once API_RENDER;
+
 new Router();
