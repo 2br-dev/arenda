@@ -7,25 +7,13 @@ require_once TRAITS . 'MakeUnix.php';
 /** Balance class */
 class Balance
 {   
-    // Объект класса DB
-    private $DB = null;
-    // Объект класса Contract
-    private $Contracts = null;
-    // Объект класса Contract
-    private $Payments = null;
-    // Объект класса Contract
-    private $Invoices = null;
-    
 
     use MakeInt;
     use MakeUnix;
     
-
     public function __construct()
     {   
-        $this->Contracts = new Contracts();
-        $this->Invoices = new Invoices();
-        $this->Payments = new Payments();
+        
     }
 
 
@@ -51,7 +39,8 @@ class Balance
         if(is_null($userId)) {
             $balance = $this->getBalanseOfContract($contractId);
         } else {
-            foreach ($this->Contracts->getContract($userId) as $key => $contract) {
+            $Contracts = new Contracts();
+            foreach ($Contracts->getContract($userId) as $key => $contract) {
                 $balance += $this->getBalanseOfContract($contract['id']);
             }
         }
@@ -71,10 +60,12 @@ class Balance
         }
         
         $dateToday = date('U'); // сегодняшняя дата в формате Unix
-        $allPayments = $this->Payments->getPayment(null, $contractId); // все платежи по договору
+        $Payments = new Payments();
+        $allPayments = $Payments->getPayment($contractId); // все платежи по договору
         $balance = $this->getSumPayments($allPayments); // сумма всех платежей
 
-        $thisContractData = array_shift( $this->Contracts->getContract(null, $contractId) ); // вся информация по договору
+        $Contracts = new Contracts($contractId);
+        $thisContractData = array_shift( $Contracts->getContract() ); // вся информация по договору
         
         $contractConditions = [
             'priceValue'      => (double) $thisContractData['price'],                 // стоимость
@@ -85,7 +76,8 @@ class Balance
         
         $__lastPaymentDate = null; // дата платежа (текущая, а когда переберу все платежи - последняя)
         
-        $allInvoices = $this->Invoices->getInvoice(null, $contractId); // Все счета по договору (отсортированные по дате)
+        $Invoices = new Invoices();
+        $allInvoices = $Invoices->getInvoice($contractId); // Все счета по договору (отсортированные по дате)
         
         foreach ($allInvoices as $invoice) {
             $invoiceDate = $this->makeUnix($invoice['date']);
