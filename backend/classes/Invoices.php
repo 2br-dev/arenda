@@ -14,7 +14,7 @@ class Invoices
     private $DB = null;
     // Объект класса Contract
     private $Contract = null;
-    
+    //
     private $invoiceId = null;
     // Имя таблицы в БД
     private static $table = 'invoices';
@@ -31,8 +31,8 @@ class Invoices
     {   
         $this->DB = DB::connect();
         //
-        if(!is_null($invoiceId)) {
-            $this->invoiceId = $invoiceId;
+        if(!is_null($invoiceId) && (int) $invoiceId > 0) {
+            $this->invoiceId = (int) $invoiceId;
         }
         //
         $this->Contracts = new Contracts();
@@ -40,21 +40,13 @@ class Invoices
 
 
     /** Возвращает список выстовленных счетов 
-     * @param int $userId
      * @param int $contractId
-     * @param int $invoiceId
      * @return array
     */
-    public function getinvoice($userId = null, $contractId = null, $invoiceId = null)
+    public function getinvoice($contractId = null)
     {
-        if(!is_null($userId)) {
-            $userId = $this->makeInt($userId);
-        }
         if(!is_null($contractId)) {
             $contractId = $this->makeInt($contractId);
-        }
-        if(!is_null($invoiceId)) {
-            $invoiceId = $this->makeInt($invoiceId);
         }
 
         $query = 'SELECT * FROM ' . self::$table;
@@ -64,47 +56,16 @@ class Invoices
         
         if(!is_null($contractId)) {
             if(!$flagAnd) {
-                $query .= ' WHERE (';
+                $query .= ' WHERE';
             } else {
-                $query .= ' AND (';
+                $query .= ' AND';
             }         
             $query .= ' contract_id = :contract_id';
             $params[':contract_id'] = $contractId;
             $flagAnd = true;
         }
-        
-        if(!is_null($userId)) {
-            $contracts = $this->Contracts->getContract($userId);
-            if(!empty($contracts)) {
-                if(!$flagAnd) {
-                    $query .= ' WHERE (';
-                } else if(!is_null($contractId)) {
-                    $query .= ' OR ';
-                } else {
-                    $query .= ' AND (';
-                }
-                $flagAnd = true;
                 
-                $counter = 1;
-                foreach ($contracts as $row) {
-                    if($counter > 1) {
-                        $query .= ' OR';
-                    }
-                    $query .= ' contract_id = :contract_id' . $counter;
-                    $params[':contract_id' . $counter] = (int) $row['id'];
-                    
-                    $counter++;
-                }
-                
-                $query .= ')';
-            } else if(!is_null($contractId)) {
-                $query .= ')';
-            }
-        } else if(!is_null($contractId)) {
-            $query .= ')';
-        }
-        
-        if(!is_null($invoiceId)) {
+        if(!is_null($this->invoiceId) && is_null($this->contractId)) {
             if(!$flagAnd) {
                 $query .= ' WHERE';
             } else {
@@ -112,7 +73,7 @@ class Invoices
             }
             //
             $query .= ' id = :id';
-            $params[':id'] = $invoiceId;
+            $params[':id'] = $this->invoiceId;
             //
             $flagAnd = true;
         }
@@ -133,7 +94,6 @@ class Invoices
     /** Добавляет новый счет
     * @param array $props
     * @return int [1 - успех, 0 - ошибка]
-    * test: 1563972016
     */ 
     public function addinvoice($props = []) 
     {
@@ -181,26 +141,27 @@ class Invoices
                 $conditions['amount'] = null;
                 $conditions['specific_amount'] = null;
             }
-        }
-
-        $thisContract = array_shift( $this->Contracts->getContract(null, $conditions['contract_id']) );
-        $dateOpening =  $this->makeUnix($thisContract['date_opening']);
-        $dateThisInvoice = $this->makeUnix($conditions['date']);
-        
-        if($this->isNotFullMonth($dateOpening, $dateThisInvoice)) {
-            $conditions['amount'] = $this->getPartialAmount((double) $thisContract['price'], $dateOpening);
-            $conditions['specific_amount'] = 1;
-        }
-        
-        if(is_null($conditions['specific_amount'])) {
-            $price = (double) $thisContract['price'];
+        } else {
+            $thisContract = array_shift( $this->Contracts->getContract(null, $conditions['contract_id']) );
+            $dateOpening =  $this->makeUnix($thisContract['date_opening']);
+            $dateThisInvoice = $this->makeUnix($conditions['date']);
             
-            if(is_null($price)) {
-                return 0;
+            if($this->isNotFullMonth($dateOpening, $dateThisInvoice)) {
+                $conditions['amount'] = $this->getPartialAmount((double) $thisContract['price'], $dateThisInvoice, $dateOpening);
+                $conditions['specific_amount'] = 1;
             }
             
-            $conditions['amount'] = $price;
+            if(is_null($conditions['specific_amount'])) {
+                $price = (double) $thisContract['price'];
+                
+                if(is_null($price)) {
+                    return 0;
+                }
+                
+                $conditions['amount'] = $price;
+            }
         }
+        
         
 
         if($this->isExistinvoice($conditions)) {
@@ -322,14 +283,25 @@ class Invoices
      * @param int $date
      * @return double
     */
-    private function getPartialAmount($amount = null, $date = null)
+    private function getPartialAmount($amount = null, $dateThis = null, $dateOpening = null)
     {
-        if(is_null($amount) || is_null($date)) {
+        if(is_null($amount) || is_null($dateThis) || is_null($dateOpening)) {
             return null;
         }
         
-        $dayStart = date('d', $date);
-        $countDays = date('t', $date);
+        $monthThis = date('n', $dateThis);
+        $amonthOpening = date('n', $dateOpening);
+        if(abs($monthThis - $amonthOpening) > 1) {
+            return 0;
+        }
+        
+        $dayStart = date('d', $dateOpening);
+        $dayInvoice = date('d', $dateThis);
+        if($dateOpening > $dayInvoice && $monthThis === $amonthOpening) {
+            return 0;
+        }
+
+        $countDays = date('t', $dateOpening);
         $remainsDays = $countDays - $dayStart + 1;
 
         return ceil($amount / $countDays * $remainsDays); // округляет в большую сторону
