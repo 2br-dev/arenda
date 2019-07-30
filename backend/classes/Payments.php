@@ -11,8 +11,6 @@ class Payments
 {   
     // Объект класса DB
     private $DB = null;
-    // Объект класса Contract
-    private $Contract = null;
 
     private $paymentId = null;
     // Имя таблицы в БД
@@ -32,8 +30,6 @@ class Payments
         if(!is_null($paymentId) && (int) $paymentId > 0) {
             $this->paymentId = (int) $paymentId;
         }
-        
-        $this->Contracts = new Contracts();
     }
 
 

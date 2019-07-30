@@ -12,8 +12,6 @@ class Invoices
 {   
     // Объект класса DB
     private $DB = null;
-    // Объект класса Contract
-    private $Contract = null;
     //
     private $invoiceId = null;
     // Имя таблицы в БД
@@ -34,8 +32,6 @@ class Invoices
         if(!is_null($invoiceId) && (int) $invoiceId > 0) {
             $this->invoiceId = (int) $invoiceId;
         }
-        //
-        $this->Contracts = new Contracts();
     }
 
 
@@ -142,7 +138,8 @@ class Invoices
                 $conditions['specific_amount'] = null;
             }
         } else {
-            $thisContract = array_shift( $this->Contracts->getContract(null, $conditions['contract_id']) );
+            $contract = new Contracts($conditions['contract_id']);
+            $thisContract = array_shift( $contract->getContract() );
             $dateOpening =  $this->makeUnix($thisContract['date_opening']);
             $dateThisInvoice = $this->makeUnix($conditions['date']);
             
