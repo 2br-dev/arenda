@@ -1,12 +1,5 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/core/path.php';
-require_once HEADERS;
-require_once API_RENDER;
-require_once CLASSES . 'Users.php';
-require_once CLASSES . 'Contracts.php';
-require_once CLASSES . 'Invoices.php';
-
 $users = new Users();
 $users = $users->getUser();
 
@@ -19,18 +12,18 @@ foreach ($users as $user) {
     ];
 }
 
-sleep(1);
+// sleep(1);
 
 apiRender($registry);
 
 
 
 
-function parseContracts($id)
+function parseContracts($userId)
 {
     $result = [];
     $contracts = new Contracts();
-    $userContracts = $contracts->getContract($id);
+    $userContracts = $contracts->getContract($userId);
     foreach ($userContracts as $userContract) {
         $today = date('U');
         $dateClosure = date('U', strtotime($userContract['date_closure']));
@@ -48,16 +41,17 @@ function parseContracts($id)
 }
 
 
-function getInvoices($id)
+function getInvoices($contractId)
 {
     $result = [];
     $invoices = new Invoices();
-    $invoices = $invoices->getInvoice(NULL, $id);
+    $invoices = $invoices->getInvoice($contractId);
     foreach ($invoices as $invoice) {
         $result[] = [
             'id'     => $invoice['id'],
             'date'   => $invoice['date'],
-            'amount' => $invoice['amount']
+            'amount' => $invoice['amount'],
+            'status' => 0
         ];
     }
 
