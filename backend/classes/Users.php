@@ -1,5 +1,4 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/core/path.php';
 require_once DB;
 require_once TRAITS . 'MakeInt.php';
 require_once TRAITS . 'MakeString.php';
@@ -42,7 +41,7 @@ class Users
      * @param array $props - пораметры фильтра
      * @return array
     */
-    public function getUsers($props = []) 
+    public function getUser($props = []) 
     {
         $query = 'SELECT * FROM ' . self::$table;
         $params = [];

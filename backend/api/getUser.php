@@ -5,6 +5,6 @@ require_once API_RENDER;
 require_once CLASSES . 'Users.php';
 //
 $user = new Users($_POST['user_id']);
-$list = $user->getUsers();
+$list = $user->getUser();
 //
 apiRender($list);

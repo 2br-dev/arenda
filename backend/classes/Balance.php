@@ -1,9 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/core/path.php';
-require_once CLASSES . 'Contracts.php';
-require_once CLASSES . 'Invoices.php';
-require_once CLASSES . 'Payments.php';
-//
+
 require_once TRAITS . 'MakeInt.php';
 require_once TRAITS . 'MakeUnix.php';
 
