@@ -39,7 +39,7 @@ class Invoices
      * @param int $contractId
      * @return array
     */
-    public function getinvoice($contractId = null)
+    public function getInvoice($contractId = null)
     {
         if(!is_null($contractId)) {
             $contractId = $this->makeInt($contractId);
@@ -198,6 +198,53 @@ class Invoices
             return 0;
         }
         return 1;
+    }
+
+
+    /** Проверяет оплачен счет или нет 
+     * @return int 1/0
+     * 
+    */
+    public function isPaid()
+    {
+        if(is_null($this->invoiceId)) {
+            return null;
+        }
+
+        $contractId = $this->getParentContract();
+        
+        $allInvoices = $this->getInvoice($contractId);
+        return $allInvoices;
+        
+    }
+
+
+    /** Возвращает id договора, которому принадлежит счет
+     * @return int 
+     * 
+    */
+    public function getParentContract()
+    {
+        if(is_null($this->invoiceId)) {
+            return null;
+        }
+        $query = 'SELECT contract_id FROM ' . self::$table . ' WHERE id = :id';
+        $params = [
+            ':id' => $this->invoiceId
+        ];
+
+        $stmt = $this->DB->prepare($query);
+        if(!$stmt->execute($params)) {
+            return null;
+        }
+        $response = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if(empty($response)) {
+            return null;
+        }
+
+        $response = array_shift($response);
+
+        return (int) $response['contract_id'];
     }
 
 
