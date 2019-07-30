@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
 
 
     getRegistry() {
-        const URL = `${BACKEND}getRegistry.php`
+        const URL = `${BACKEND}getRegistry`
         const OPTIONS = {
             mode: 'cors',
             method: 'POST'
