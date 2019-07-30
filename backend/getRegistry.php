@@ -39,7 +39,7 @@ function parseContracts($id)
             'name' => $userContract['name'],
             'dateOpening' => $userContract['date_opening'],
             'dateClosure' => $userContract['date_closure'],
-            'status' => ($today > $dateClosure) ? 1 : 0,
+            'status' => ($today > $dateClosure) ? 0 : 1,
             'invoices' => getInvoices($userContract['id'])
         ];
     }
