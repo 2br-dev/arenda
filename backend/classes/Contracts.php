@@ -27,44 +27,24 @@ class Contracts
     {   
         $this->DB = DB::connect();
         
-        if(!is_null($contractId)) {
-            $this->contractId = $contractId;
+        if(!is_null($contractId) && (int) $contractId > 0) {
+            $this->contractId = (int) $contractId;
         }
-
     }
 
 
     /** Возвращает список договоров
-     * @param int $userId
-     * @param int $contractId
+     * @param array $props
+     * @return array
     */
-    public function getContract($userId = null, $contractId = null) 
+    public function getContract($props = []) 
     {   
-        if(!is_null($userId)) {
-            $userId = $this->makeInt($userId);
-        }
-        if(!is_null($contractId)) {
-            $contractId = $this->makeInt($contractId);
-        }
-
         $query = 'SELECT * FROM ' . self::$table;
         $params = [];
 
         $flagAnd = false;
         
-        if(!is_null($userId)) {
-            if(!$flagAnd) {
-                $query .= ' WHERE';
-            } else {
-                $query .= ' AND';
-            }
-            
-            $query .= ' user_id = :user_id';
-            $params[':user_id'] = $userId;
-            
-            $flagAnd = true;
-        }
-        if(!is_null($contractId)) {
+        if(!is_null($this->contractId)) {
             if(!$flagAnd) {
                 $query .= ' WHERE';
             } else {
@@ -72,7 +52,7 @@ class Contracts
             }
             
             $query .= ' id = :id';
-            $params[':id'] = $contractId;
+            $params[':id'] = $this->contractId;
             
             $flagAnd = true;
         }
@@ -148,7 +128,7 @@ class Contracts
             if(is_null($conditions['date_opening'])) {
                return 0; 
             }
-            $conditions['date_closure'] = date('Y-m-d', strtotime('+12 months', strtotime($conditions['date_opening']))); // по умолчанию на 12 месяцев
+            $conditions['date_closure'] = date('Y-m-t', strtotime('+12 months', strtotime($conditions['date_opening']))); // по умолчанию на 12 месяцев
         }
         
         if(isset($props['date_closure'])) {
@@ -199,17 +179,12 @@ class Contracts
 
 
     /** Устанавливает стоимость за расчетный период 
-     * @param int $contractId
-     * @param int $price
+     * @param double $price
+     * @return int
     */
-    public function setPrice($contractId, $price)
+    public function setPrice($price)
     {
-        if(!is_null($contractId)) {
-            $contractId = $this->makeInt($contractId);
-            if(is_null($contractId)) {
-                return 0;
-            }
-        } else {
+        if(is_null($this->contractId)) {
             return 0;
         }
         
@@ -222,13 +197,13 @@ class Contracts
             return 0;
         } 
          
-        if(!$this->isExistContract(['id' => $contractId])) {
+        if(!$this->isExistContract(['id' => $this->contractId])) {
             return 0;
         }
         
         $query = 'UPDATE ' . self::$table . ' SET price = :price WHERE id = :id';
         $params = [
-            ':id' => $contractId,
+            ':id' => $this->contractId,
             ':price' => $price,
         ];
         $stmt = $this->DB->prepare($query);
@@ -241,17 +216,12 @@ class Contracts
 
 
     /** Устанавливает скидку на цену за расчетный период 
-     * @param int $contractId
-     * @param int $discount
+     * @param double $discount
+     * @return int 
     */
-    public function setDiscount($contractId, $discount)
+    public function setDiscount($discount)
     {
-        if(!is_null($contractId)) {
-            $contractId = $this->makeInt($contractId);
-            if(is_null($contractId)) {
-                return 0;
-            }
-        } else {
+        if(is_null($this->contractId)) {
             return 0;
         }
         
@@ -264,13 +234,13 @@ class Contracts
             return 0;
         }
         
-        if(!$this->isExistContract(['id' => $contractId])) {
+        if(!$this->isExistContract(['id' => $this->contractId])) {
             return 0;
         }
         
         $query = 'UPDATE ' . self::$table . ' SET discount = :discount WHERE id = :id';
         $params = [
-            ':id' => $contractId,
+            ':id' => $this->contractId,
             ':discount' => $discount,
         ];
         $stmt = $this->DB->prepare($query);
@@ -283,26 +253,21 @@ class Contracts
 
 
     /** Возвращает расчитанную стоимость за расчетный период с учетом скидки
-     * @param int [$contractId = NULL] $contractId
+     * @return double
     */
-    public function getCost($contractId = NULL) 
+    public function getCost() 
     {
-        if(!is_null($contractId)) {
-            $contractId = $this->makeInt($contractId);
-            if(is_null($contractId)) {
-                return null;
-            }
-        } else {
+        if(is_null($this->contractId)) {
             return null;
-        } 
+        }
         
-        if(!$this->isExistContract(['id' => $contractId])) {
+        if(!$this->isExistContract(['id' => $this->contractId])) {
             return null;
         }
         
         $query = 'SELECT price, discount FROM ' . self::$table . ' WHERE id = :id';
         $params = [
-            ':id' => $contractId
+            ':id' => $this->contractId
         ];
         
         $stmt = $this->DB->prepare($query);
