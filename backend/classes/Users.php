@@ -42,7 +42,7 @@ class Users
      * @param array $props - пораметры фильтра
      * @return array
     */
-    public function getUser($props = []) 
+    public function getUsers($props = []) 
     {
         $query = 'SELECT * FROM ' . self::$table;
         $params = [];
