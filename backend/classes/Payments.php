@@ -29,8 +29,8 @@ class Payments
     {   
         $this->DB = DB::connect();
         
-        if(!is_null($paymentId)) {
-            $this->paymentId = $paymentId;
+        if(!is_null($paymentId) && (int) $paymentId > 0) {
+            $this->paymentId = (int) $paymentId;
         }
         
         $this->Contracts = new Contracts();
@@ -43,17 +43,10 @@ class Payments
      * @param int $paymentId
      * @return array
     */
-    public function getPayment($userId = null, $contractId = null, $paymentId = null) 
+    public function getPayment($contractId = null) 
     {
-
-        if(!is_null($userId)) {
-            $userId = $this->makeInt($userId);
-        }
         if(!is_null($contractId)) {
             $contractId = $this->makeInt($contractId);
-        }
-        if(!is_null($paymentId)) {
-            $paymentId = $this->makeInt($paymentId);
         }
 
         $query = 'SELECT * FROM ' . self::$table;
@@ -63,9 +56,9 @@ class Payments
         
         if(!is_null($contractId)) {
             if(!$flagAnd) {
-                $query .= ' WHERE (';
+                $query .= ' WHERE';
             } else {
-                $query .= ' AND (';
+                $query .= ' AND';
             }
             
             $query .= ' contract_id = :contract_id';
@@ -74,38 +67,7 @@ class Payments
             $flagAnd = true;
         }
         
-        if(!is_null($userId)) {
-            $contracts = $this->Contracts->getContract($userId);
-            if(!empty($contracts)) {
-                if(!$flagAnd) {
-                    $query .= ' WHERE (';
-                } else if(!is_null($contractId)) {
-                    $query .= ' OR ';
-                } else {
-                    $query .= ' AND (';
-                }
-                $flagAnd = true;
-                //
-                $counter = 1;
-                foreach ($contracts as $row) {
-                    if($counter > 1) {
-                        $query .= ' OR';
-                    }
-                    $query .= ' contract_id = :contract_id' . $counter;
-                    $params[':contract_id' . $counter] = (int) $row['id'];
-                    
-                    $counter++;
-                }
-                
-                $query .= ')';
-            } else if(!is_null($contractId)) {
-                $query .= ')';
-            }
-        } else if(!is_null($contractId)) {
-            $query .= ')';
-        }
-        
-        if(!is_null($paymentId)) {
+        if(!is_null($this->paymentId)) {
             if(!$flagAnd) {
                 $query .= ' WHERE';
             } else {
@@ -113,7 +75,7 @@ class Payments
             }
             
             $query .= ' id = :id';
-            $params[':id'] = $paymentId;
+            $params[':id'] = $this->paymentId;
             
             $flagAnd = true;
         }
