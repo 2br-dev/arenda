@@ -1,5 +1,6 @@
 <?php
 require_once 'core/path.php';
+require_once HEADERS;
 require_once ROUTER;
 
 require_once CLASSES . 'Users.php';
