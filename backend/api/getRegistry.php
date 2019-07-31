@@ -47,11 +47,13 @@ function getInvoices($contractId)
     $invoices = new Invoices();
     $invoices = $invoices->getInvoice($contractId);
     foreach ($invoices as $invoice) {
+        $Computation = new Computation();
+
         $result[] = [
             'id'     => $invoice['id'],
             'date'   => $invoice['date'],
             'amount' => $invoice['amount'],
-            'status' => 0
+            'status' => $Computation->isPaidInvoice($invoice['id'])
         ];
     }
 

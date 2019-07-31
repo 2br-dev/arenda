@@ -12,8 +12,5 @@ define('ROUTS', [
    'addInvoice', // выставить счет
    'getPayment', // получить платежи
    'addPayment', // добавить платеж
-   'getBalance', // получить баланс 
    'getRegistry', // получить реестор всех пользователей с договорами и счетами
-   'checkPaid', 
-   'computation', // тест методов computation
 ]);

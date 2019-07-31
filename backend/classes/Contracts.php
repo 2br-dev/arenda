@@ -37,14 +37,31 @@ class Contracts
      * @param array $props
      * @return array
     */
-    public function getContract($props = []) 
+    public function getContract($userId = null) 
     {   
+        if(!is_null($userId)) {
+            $userId = $this->makeInt($userId);
+        }
+
         $query = 'SELECT * FROM ' . self::$table;
         $params = [];
 
         $flagAnd = false;
+
+        if(!is_null($userId)) {
+            if(!$flagAnd) {
+                $query .= ' WHERE';
+            } else {
+                $query .= ' AND';
+            }
+            //
+            $query .= ' user_id = :user_id';
+            $params[':user_id'] = $userId;
+            //
+            $flagAnd = true;
+        }
         
-        if(!is_null($this->contractId)) {
+        if(!is_null($this->contractId) && is_null($userId)) {
             if(!$flagAnd) {
                 $query .= ' WHERE';
             } else {
@@ -137,7 +154,7 @@ class Contracts
                return 0; 
             }
         }
-     
+        
         if($this->isExistContract($conditions)) {
             return 0;
         }

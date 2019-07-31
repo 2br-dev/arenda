@@ -160,7 +160,6 @@ class Computation
         // доступные механизмы обработки
         $drivers = [
             'isPaidInvoice',
-            'getBalance'
         ];
         $DRIVER = null;
         
@@ -195,12 +194,14 @@ class Computation
             $invoicePaymentZone = $this->addToDate($invoiceDate, $contractConditions['paymentZone']);
             $invoiceDiscountZone = $this->addToDate($invoiceDate, $contractConditions['discountZone']);
 
-            // если стоимость была внечена вручную = true
             $specificInvoiceAmountFlag = $this->isSpecificInvoiceAmount($invoice['specific_amount']);
 
             $invoiceAmount = (double) $invoice['amount']; // сумма по счету (не мутирует)
             $invoiceAmountDiscount = $this->getAmountWithDiscount($invoiceAmount, $contractConditions['discountValue']); // сумма по счету (не мутирует)
-            
+            if($invoiceAmount !== $contractConditions['priceValue'] && !$specificInvoiceAmountFlag) {
+                $invoiceAmountDiscount = $invoiceAmount;
+            }
+
             $tempAmount = $invoiceAmount; // сумма по счету для мутации
             $tempAmountDiscount = $invoiceAmountDiscount; // сумма по счету с дисконтом для мутации
             
@@ -251,19 +252,19 @@ class Computation
                     if($id === (int) $invoiceId) {
                         if($discontFlag && $paymentSum >= 0) {
                             return [
-                                'status' => 1,
+                                'isPayt' => 1,
                                 'discount' => 1,
                                 'amount' => $invoiceAmountDiscount
                             ];
                         } else if($paymentSum >= 0) {
                             return [
-                                'status' => 1,
+                                'isPayt' => 1,
                                 'discount' => 0,
                                 'amount' => $invoiceAmount
                             ];
                         } else {
                             return [
-                                'status' => 0,
+                                'isPayt' => 0,
                                 'discount' => 0,
                                 'amount' => $invoiceAmount
                             ];
