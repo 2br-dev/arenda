@@ -10,7 +10,9 @@ const DashboardView = props => {
     if(props.registryLoading === 0) {
         if(props.registry.length === 0) {
             registryContent = <p className="registry__empty">Реестр пуст</p>
-        } else {          
+        } else {   
+            console.log(props.registry);
+                   
             registryContent = <ViewRegistry data={props.registry} />
         }
     }
@@ -36,10 +38,10 @@ const ViewRegistry = props => {
         <div key={`user_${key}`} className="registry__user">
             <div className="registry__user_box-flex">
                 <p className="registry__user_name">{user.name}</p>
-                {user.status === 1 
+                {/* {user.status === 1 
                     ? <p className="registry__user_status registry__user_status-active">Активный</p>
                     : <p className="registry__user_status registry__user_status-no-active">Не активный</p>
-                }
+                } */}
             </div>
             <ViewContracts data={user.contracts}/>
         </div>
@@ -66,12 +68,11 @@ const ViewInvoices = props => {
     return props.data.map((invoice, key) => 
         <div key={`invoice_${key}`} className="registry__invoice">
             <p className="registry__invoice_date">Счет от: {invoice.date}</p>
-            <p className="registry__invoice_amount">На сумму: {invoice.amount} р.</p>
-            {invoice.status === 1 
+            <p className="registry__invoice_amount">На сумму: {invoice.status.amount} р.</p>
+            {invoice.status.isPayt === 1 
                 ? <p className="registry__invoice_status registry__invoice_status-paid">Оплачен</p>
                 : <p className="registry__invoice_status registry__invoice_status-no-paid">Не оплачен</p>
             }
         </div>
     )
 }
-
