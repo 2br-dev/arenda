@@ -15,4 +15,5 @@ define('ROUTS', [
    'getBalance', // получить баланс 
    'getRegistry', // получить реестор всех пользователей с договорами и счетами
    'checkPaid', 
+   'computation', // тест методов computation
 ]);
