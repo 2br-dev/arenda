@@ -23,6 +23,7 @@ function parseContracts($userId)
 {
     $result = [];
     $contracts = new Contracts();
+    $DATE = new PrepareDate();
     $userContracts = $contracts->getContract($userId);
     foreach ($userContracts as $userContract) {
         $today = date('U');
@@ -30,8 +31,8 @@ function parseContracts($userId)
         $result[] = [
             'id' => (int) $userContract['id'],
             'name' => $userContract['name'],
-            'dateOpening' => $userContract['date_opening'],
-            'dateClosure' => $userContract['date_closure'],
+            'dateOpening' => $DATE->prepare($userContract['date_opening']),
+            'dateClosure' => $DATE->prepare($userContract['date_closure']),
             'status' => ($today > $dateClosure) ? 0 : 1,
             'invoices' => getInvoices($userContract['id'])
         ];
@@ -44,6 +45,7 @@ function parseContracts($userId)
 function getInvoices($contractId)
 {
     $result = [];
+    $DATE = new PrepareDate();
     $invoices = new Invoices();
     $invoices = $invoices->getInvoice($contractId);
     foreach ($invoices as $invoice) {
@@ -51,7 +53,7 @@ function getInvoices($contractId)
 
         $result[] = [
             'id'     => $invoice['id'],
-            'date'   => $invoice['date'],
+            'date'   => $DATE->prepare($invoice['date']),
             'amount' => $invoice['amount'],
             'status' => $Computation->isPaidInvoice($invoice['id'])
         ];
