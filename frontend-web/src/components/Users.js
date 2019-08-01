@@ -55,23 +55,6 @@ class Users extends React.Component {
         }      
     }
         
-        
-    getUsers() {
-        
-        const URL = `${BACKEND}getUser`
-        const OPTIONS = {
-            mode: 'cors',
-            method: 'POST'
-        }
-        
-        fetch(URL, OPTIONS)
-            .then(response => response.json())
-            .then(response => {
-                    this.props.onUpdateUsers(response)
-                    this.setState({users: response})
-                })
-    }
-
 
     render() {
         return (
@@ -90,10 +73,6 @@ const mapStateToProps = state => ({
     users: state.dashboard.users
 })
 
-const mapDispatchToProps = dispatch => ({
-    onUpdateUsers: users => {
-        dispatch({ type: 'UPDATE_USERS', payload: users })
-    }
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users)
