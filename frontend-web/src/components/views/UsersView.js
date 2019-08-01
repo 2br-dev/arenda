@@ -1,20 +1,21 @@
 import React from 'react'
-import { Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"
+
+import Updater from './../Updater'
 
 import './../../assets/css/Users.css'
 
 
-const UsersView = props => {
-    
-    const wrapUserMain   = () => <UserMain addSubmit={props.addSubmit} addError={props.addError} users={props.users}/>
-    console.log(props);
-    
+const UsersView = props => {    
     return (
         <div className="content">
-            <Route path="/users/" component={wrapUserMain} />
+            <UserMain addSubmit={props.addSubmit} addError={props.addError} users={props.users}/>
+            {props.update === 1 
+                ? <Updater update="User" />
+                : null
+            }
         </div>
     )
-
 }
 
 

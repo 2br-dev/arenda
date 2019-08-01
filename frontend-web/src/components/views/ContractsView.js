@@ -5,7 +5,7 @@ import './../../assets/css/Contracts.css'
 
 const ContractsView = props => {
     
-    console.log(props);
+    // console.log(props);
     
     return (
         <div className="content">

@@ -12,14 +12,13 @@ class Users extends React.Component {
         super(props)
         this.state = {
             addError: '',
-            users: []
+            update: 0
         }
-        this.getUsers()
-        
     }
 
 
     addSubmit(e) {
+        this.setState({update: 0})
         e.preventDefault()
         
         const name = document.getElementById('addName').value
@@ -48,7 +47,7 @@ class Users extends React.Component {
                 .then(response => {
                     if(response === 1) {
                         this.setState({addError: ''})
-                        this.getUsers()
+                        this.setState({update: 1})
                     } else {
                         this.setState({addError: 'Пользователь с таким именем уже существует'})
                     }
@@ -79,7 +78,8 @@ class Users extends React.Component {
             <UsersView
                 addSubmit={this.addSubmit.bind(this)}
                 addError={this.state.addError}
-                users={this.state.users}
+                users={this.props.users}
+                update={this.state.update}
             />
         )
     }

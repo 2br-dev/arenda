@@ -1,17 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { BACKEND } from './../path.js'
+import { BACKEND } from '../path.js'
 
-import DashboardView from './views/DashboradView'
+import RegistryView from './views/RegistryView'
 
 
-class Dashboard extends React.Component {
+class Registry extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            registryLoading: 1,
+            
         }
         
         this.getRegistry()
@@ -30,14 +30,13 @@ class Dashboard extends React.Component {
             .then(response => response.json())
             .then(response => {
                 this.props.onUpdateRegistry(response)
-                this.setState({registryLoading: 0})
             })
     }
 
 
     render() {
         return (
-            <DashboardView registryLoading={this.state.registryLoading} registry={this.props.registry}/>
+            <RegistryView registry={this.props.registry}/>
         )
     }
 }
@@ -53,4 +52,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Registry)

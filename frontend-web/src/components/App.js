@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux'
 
 
-import Dashboard from './Dashboard'
+import Updater from './Updater'
+import Registry from './Registry'
 import Users from './Users'
 import Contracts from './Contracts'
 import Invoices from './Invoices'
@@ -24,24 +25,25 @@ class App extends React.Component {
 
 
 	render() {
-		const wrapperDashboard = () => <Dashboard />
-		const wrapperUsers = () => <Users />
+		const wrapperRegistry = () => <Registry />
+		const wrapperUsers     = () => <Users />
 		const wrapperContracts = () => <Contracts />
-		const wrapperInvoices = () => <Invoices />
-		const wrapperPayments = () => <Payments />
+		const wrapperInvoices  = () => <Invoices />
+		const wrapperPayments  = () => <Payments />
 
 		return (
 			<Router>
 				<main className="app">
 					<Header />
 					<Switch>
-						<Route path="/" exact component={wrapperDashboard} />
+						<Route path="/" exact component={wrapperRegistry} />
 						<Route path="/users/" component={wrapperUsers} />
 						<Route path="/contracts/" component={wrapperContracts} />
 						<Route path="/invoices/" component={wrapperInvoices} />
 						<Route path="/payments/" component={wrapperPayments} />
 					</Switch>
 				</main>
+				<Updater update="All"/>
 			</Router>
 		)
 	}

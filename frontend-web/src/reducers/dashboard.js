@@ -32,7 +32,7 @@ export default function dashboard(state = initiaState, action) {
         case "UPDATE_INVOICES":{
             return {
                 ...state,
-                invoice: action.payload
+                invoices: action.payload
             }         
         }
         case "UPDATE_PAYMENTS":{

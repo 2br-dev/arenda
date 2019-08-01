@@ -12,6 +12,7 @@ class Contracts extends React.Component {
         super(props)
         this.state = {
             addError: '',
+            users: this.props.users,
             contracts: []
         }
         this.getContracts()
@@ -20,22 +21,24 @@ class Contracts extends React.Component {
 
     addSubmit(e) {
         e.preventDefault()
+        console.log('submit contracts');
+        
     }
         
         
     getContracts() { 
-        // const URL = `${BACKEND}getContracts`
-        // const OPTIONS = {
-        //     mode: 'cors',
-        //     method: 'POST'
-        // }
+        const URL = `${BACKEND}getContract`
+        const OPTIONS = {
+            mode: 'cors',
+            method: 'POST'
+        }
         
-        // fetch(URL, OPTIONS)
-        //     .then(response => response.json())
-        //     .then(response => {
-        //             this.props.onUpdateContracts(response)
-        //             this.setState({contracts: response})
-        //         })
+        fetch(URL, OPTIONS)
+            .then(response => response.json())
+            .then(response => {
+                    this.props.onUpdateContracts(response)
+                    this.setState({contracts: response})
+                })
     }
 
 
@@ -50,6 +53,7 @@ class Contracts extends React.Component {
 
 
 const mapStateToProps = state => ({
+    users: state.dashboard.users,
     contracts: state.dashboard.contracts
 })
 

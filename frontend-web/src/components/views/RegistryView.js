@@ -1,18 +1,15 @@
 import React from 'react'
 
-import Loader from './../UI/Loader'
 
-import './../../assets/css/Dashboard.css'
+import './../../assets/css/Registry.css'
 
 
-const DashboardView = props => {
-    let registryContent = <Loader />
-    if(props.registryLoading === 0) {
-        if(props.registry.length === 0) {
-            registryContent = <p className="registry__empty">Реестр пуст</p>
-        } else {   
-            registryContent = <ViewRegistry data={props.registry} />
-        }
+const RegistryView = props => {
+    let registryContent = ''
+    if(props.registry.length === 0) {
+        registryContent = <p className="registry__empty">Реестр пуст</p>
+    } else {   
+        registryContent = <ViewRegistry data={props.registry} />
     }
 
     return (
@@ -28,7 +25,7 @@ const DashboardView = props => {
 }
 
 
-export default DashboardView
+export default RegistryView
 
 
 const ViewRegistry = props => {
