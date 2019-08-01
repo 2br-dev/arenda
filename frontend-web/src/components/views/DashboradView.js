@@ -11,8 +11,6 @@ const DashboardView = props => {
         if(props.registry.length === 0) {
             registryContent = <p className="registry__empty">Реестр пуст</p>
         } else {   
-            console.log(props.registry);
-                   
             registryContent = <ViewRegistry data={props.registry} />
         }
     }
@@ -38,10 +36,6 @@ const ViewRegistry = props => {
         <div key={`user_${key}`} className="registry__user">
             <div className="registry__user_box-flex">
                 <p className="registry__user_name">{user.name}</p>
-                {/* {user.status === 1 
-                    ? <p className="registry__user_status registry__user_status-active">Активный</p>
-                    : <p className="registry__user_status registry__user_status-no-active">Не активный</p>
-                } */}
             </div>
             <ViewContracts data={user.contracts}/>
         </div>

@@ -11,13 +11,24 @@
   align-items: center;
   justify-content: space-between;
 }
-.header__logo {
-  user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  font-size: 40px;
-  font-weight: 700;
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  padding: 0 20px;
+}
+.header__nav_link {
+  font-size: 18px;
   color: #fff;
+  cursor: pointer;
+  margin: 0 40px 0 0;
+}
+.header__nav_link:last-child {
+  margin: 0;
+}
+.header__nav_link:hover {
+  text-decoration: underline;
 }
 .header__btn {
   user-select: none;
@@ -33,6 +44,7 @@
   cursor: pointer;
   transition: 0.2s;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 .header__btn:hover:not(.mobile) {
   color: #fff;

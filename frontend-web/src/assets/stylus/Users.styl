@@ -1,0 +1,88 @@
+@import './props.styl'
+
+
+.content
+    padding: 20px
+
+@media screen and (max-width: 1000px)
+    .content
+        padding: 10px
+
+.add
+    border-radius: 5px
+    background: color_2
+    padding: 20px
+    box-shadow: 0px 0px 5px 0px color_4
+
+    &__title
+        font-size: 20px
+        font-weight: 700
+        margin: 0 0 40px 0
+    
+    &__row
+        margin: 0 0 20px 0
+
+    &__row-submit
+        display: flex
+        justify-content: flex-end
+    
+    &__input
+        display: block
+        width: 100%
+        padding: 10px
+        font-size: 18px
+        color: color_1
+        outline: none
+        transition: 0.2s
+        border-radius: 5px
+        border: 2px solid color_3
+
+    &__submit
+        font-size: 16px
+        padding: 10px 30px
+        text-transform: uppercase
+        color: color_2
+        cursor pointer
+        transition: 0.2s
+        border: 2px solid color_3
+        border-radius: 5px
+        background-color: color_3
+        &:hover
+            color: color_3
+            background: transparent
+    
+    &__error
+        font-size: 18px
+        color: color_5
+        transition: 0.5s
+        opacity 0
+        display: none
+        text-align: right 
+
+        &-visible
+            display: block
+            opacity: 1
+            margin: 20px 0 0 0
+
+.list
+    border-radius: 5px
+    margin: 20px 0 0 0
+    background: color_2
+    padding: 20px
+    box-shadow: 0px 0px 5px 0px color_4
+
+    &__title
+        font-size: 20px
+        font-weight: 700
+        margin: 0 0 40px 0
+    
+    &__link
+        display: block
+        padding: 10px
+        border-radius: 5px
+        font-size: 18px
+        color: color_1
+        cursor pointer
+        transition: 0.2s
+        &:hover
+            background: color_4

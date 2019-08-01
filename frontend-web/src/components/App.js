@@ -1,7 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux'
+
 
 import Dashboard from './Dashboard'
+import Users from './Users'
+import Contracts from './Contracts'
+import Invoices from './Invoices'
+import Payments from './Payments'
 import Header from './Header'
 
 import './../assets/css/reset.css'
@@ -16,9 +22,13 @@ class App extends React.Component {
 		this.state = {}
 	}
 
-	
+
 	render() {
 		const wrapperDashboard = () => <Dashboard />
+		const wrapperUsers = () => <Users />
+		const wrapperContracts = () => <Contracts />
+		const wrapperInvoices = () => <Invoices />
+		const wrapperPayments = () => <Payments />
 
 		return (
 			<Router>
@@ -26,6 +36,10 @@ class App extends React.Component {
 					<Header />
 					<Switch>
 						<Route path="/" exact component={wrapperDashboard} />
+						<Route path="/users/" component={wrapperUsers} />
+						<Route path="/contracts/" component={wrapperContracts} />
+						<Route path="/invoices/" component={wrapperInvoices} />
+						<Route path="/payments/" component={wrapperPayments} />
 					</Switch>
 				</main>
 			</Router>
@@ -56,4 +70,8 @@ window.onload = () => {
 }
 
 
-export default App
+const mapStateToProps = state => ({})
+
+const mapDispatchToProps = dispatch => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

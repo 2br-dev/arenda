@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
         fetch(URL,OPTIONS)
             .then(response => response.json())
             .then(response => {
-                this.props.onSetRegistry(response)
+                this.props.onUpdateRegistry(response)
                 this.setState({registryLoading: 0})
             })
     }
@@ -48,8 +48,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onSetRegistry: (registry) => {
-        dispatch({ type: 'SET_REGISTORY', payload: registry })
+    onUpdateRegistry: (registry) => {
+        dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
     }
 })
 
