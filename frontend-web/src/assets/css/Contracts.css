@@ -22,3 +22,81 @@
 .list__link:hover {
   background: #eee;
 }
+.add {
+  border-radius: 5px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 0px #eee;
+}
+.add__box {
+  margin: 0 0 20px 0;
+}
+.add__box:last-child {
+  margin: 0;
+}
+.add__label {
+  display: block;
+  font-size: 18px;
+  margin: 0 0 5px 0;
+}
+.add__select {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  padding: 10px;
+}
+.add__select_option {
+  font-size: 18px;
+}
+.add__input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+}
+.add__input-date {
+  display: block;
+  width: 390px;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+  margin: 0 20px 0 0;
+}
+.add__box-date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.add__box-submit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.add__submit {
+  font-size: 16px;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  background-color: #1976d2;
+}
+.add__submit:hover {
+  color: #1976d2;
+  background: transparent;
+}
