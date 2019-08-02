@@ -17,23 +17,26 @@
   font-weight: 700;
   margin: 0 0 40px 0;
 }
-.add__row {
+.add__box {
   margin: 0 0 20px 0;
 }
-.add__row-submit {
-  display: flex;
-  justify-content: flex-end;
+.add__box:last-child {
+  margin: 0;
 }
 .add__input {
   display: block;
   width: 100%;
-  padding: 10px;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
   font-size: 18px;
   color: #333;
-  outline: none;
-  transition: 0.2s;
-  border-radius: 5px;
-  border: 2px solid #1976d2;
+  padding: 10px;
+}
+.add__box-submit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 .add__submit {
   font-size: 16px;
@@ -51,17 +54,17 @@
   background: transparent;
 }
 .add__error {
+  display: none;
+  opacity: 0;
   font-size: 18px;
   color: #c41e3a;
   transition: 0.5s;
-  opacity: 0;
-  display: none;
   text-align: right;
+  margin: 20px 0 0 0;
 }
 .add__error-visible {
   display: block;
   opacity: 1;
-  margin: 20px 0 0 0;
 }
 .list {
   border-radius: 5px;

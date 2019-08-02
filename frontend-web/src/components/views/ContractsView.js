@@ -38,6 +38,7 @@ const Add = ({users, submit, error}) => {
 
     return (
         <form className="add" onSubmit={submit}>
+            <p className="add__title">Добавить новый договор</p>
             <div className="add__box">
                 <label htmlFor="addSelect" className="add__label">Выберете пользователя из списка:</label>
                 <select id="addSelect" className="add__select">
@@ -82,7 +83,7 @@ const Add = ({users, submit, error}) => {
                 <input id="addDiscountZone" type="text" className="add__input" placeholder='Длинна дисконтного периода (с даты выставления счета до конца последнего дня)*'/>
             </div>
             <div className="add__box-submit">
-                <button className="add__submit">Добавить договор</button>
+                <button type="submit" className="add__submit">Добавить договор</button>
             </div>
             <p className={addErrorClass}>{error}</p>
         </form>

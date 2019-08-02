@@ -72,11 +72,7 @@ class Contracts extends React.Component {
             isValid = false
         }       
         
-        if(errors.length > 0) {
-            this.setState({addError: errors.join(' | ')})
-        } else {
-            this.setState({addError: ''})
-        }
+        this.setState({addError: errors.join(' | ')})
         
         const Data = new FormData()
         Data.append('user_id', userId)

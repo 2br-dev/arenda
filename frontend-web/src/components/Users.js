@@ -22,20 +22,51 @@ class Users extends React.Component {
         this.setState({update: 0})
         e.preventDefault()
         
-        const name = document.getElementById('addName').value
+        const name     = document.getElementById('addName').value
+        const city     = document.getElementById('addCity').value
+        const address  = document.getElementById('addAddress').value
+        const phone    = document.getElementById('addPhone').value
+        const email    = document.getElementById('addEmail').value
+        const password = document.getElementById('addPassword').value
 
-        let flag = true
+        let isValid = true
         let errors = []
         if(name.length === 0) {
-            flag = false;
+            isValid = false;
             errors.push('Не указано имя')
         }
+        if(city.length === 0) {
+            isValid = false;
+            errors.push('Не указан город')
+        }
+        if(address.length === 0) {
+            isValid = false;
+            errors.push('Не указан адрес')
+        }
+        if(phone.length === 0) {
+            isValid = false;
+            errors.push('Не указан телефон')
+        }
+        if(email.length === 0) {
+            isValid = false;
+            errors.push('Не указан e-mail')
+        }
+        if(password.length === 0) {
+            isValid = false;
+            errors.push('Не указан пароль')
+        }
+        
         this.setState({addError: errors.join(' | ')})
         
         const Data = new FormData();
         Data.append('name', name)
+        Data.append('city', city)
+        Data.append('address', address)
+        Data.append('phone', phone)
+        Data.append('email', email)
+        Data.append('password', password)
 
-        if(flag) {
+        if(isValid) {           
             const URL = `${BACKEND}addUser`
             const OPTIONS = {
                 mode: 'cors',
@@ -50,7 +81,7 @@ class Users extends React.Component {
                         this.setState({addError: ''})
                         this.update()
                     } else {
-                        this.setState({addError: 'Пользователь с таким именем уже существует'})
+                        this.setState({addError: 'Пользователь с таким email уже существует'})
                     }
                 })   
         }      
