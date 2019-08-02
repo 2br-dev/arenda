@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Updater from './../Updater'
 
 import './../../assets/css/Contracts.css'
 
@@ -12,10 +11,6 @@ const ContractsView = props => {
                 <Add/>
                 <List contracts={props.contracts}/>
             </div>
-            {props.update === 1 
-                ? <Updater update="Contracts" />
-                : null
-            }
         </div>
     )
 }

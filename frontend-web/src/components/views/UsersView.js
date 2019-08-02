@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 
-import Updater from './../Updater'
 
 import './../../assets/css/Users.css'
 
@@ -10,10 +9,6 @@ const UsersView = props => {
     return (
         <div className="content">
             <UserMain addSubmit={props.addSubmit} addError={props.addError} users={props.users}/>
-            {props.update === 1 
-                ? <Updater update="User" />
-                : null
-            }
         </div>
     )
 }

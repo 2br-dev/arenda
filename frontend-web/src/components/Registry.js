@@ -13,26 +13,7 @@ class Registry extends React.Component {
         this.state = {
             
         }
-        
-        this.getRegistry()
-
     }
-
-
-    getRegistry() {
-        const URL = `${BACKEND}getRegistry`
-        const OPTIONS = {
-            mode: 'cors',
-            method: 'POST'
-        }
-
-        fetch(URL,OPTIONS)
-            .then(response => response.json())
-            .then(response => {
-                this.props.onUpdateRegistry(response)
-            })
-    }
-
 
     render() {
         return (
@@ -46,10 +27,6 @@ const mapStateToProps = state => ({
     registry: state.dashboard.registry
 })
 
-const mapDispatchToProps = dispatch => ({
-    onUpdateRegistry: (registry) => {
-        dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
-    }
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registry)
