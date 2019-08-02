@@ -100,9 +100,7 @@ class Contracts extends React.Component {
                         this.update()
                     } else {
                         this.setState({addError: 'Ошибка при занесении в БД'})
-                    }
-                    console.log(response);
-                    
+                    }                    
                 })   
         }
     }
