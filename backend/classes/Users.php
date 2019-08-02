@@ -81,14 +81,46 @@ class Users
     {   
         // Требуемые параметры
         $conditions = [
-            'name' => null
+            'name'     => null,
+            'city'     => null,
+            'address'  => null,
+            'phone'    => null,
+            'email'    => null,
+            'password' => null
         ];
 
-        if(isset($props['name'])) {
-            $conditions['name'] = $this->makeString($props['name']);
-            if(is_null($conditions['name'])) {
-                return 0;
-            }
+        if(isset($props['name']) && strlen($props['name']) !== 0) {
+            $conditions['name'] = $props['name'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['city']) && strlen($props['city']) !== 0) {
+            $conditions['city'] = $props['city'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['address']) && strlen($props['address']) !== 0) {
+            $conditions['address'] = $props['address'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['phone']) && strlen($props['phone']) !== 0) {
+            $conditions['phone'] = $props['phone'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['email']) && strlen($props['email']) !== 0) {
+            $conditions['email'] = $props['email'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['password']) && strlen($props['password']) !== 0) {
+            $conditions['password'] = password_hash($props['password'], PASSWORD_DEFAULT);
         } else {
             return 0;
         }
@@ -96,6 +128,7 @@ class Users
         if($this->isExistUser($conditions)) {
             return 0;
         }
+
 
         $query = 'INSERT INTO ' . self::$table;
         $params = [];
@@ -147,14 +180,14 @@ class Users
       
         $conditions = [
             'id' => null,
-            'name' => null
+            'email' => null
         ];
 
         if(isset($props['id'])) {
             $conditions['id'] = $this->makeInt($props['id']);
         }
-        if(isset($props['name'])) {
-            $conditions['name'] = $this->makeString($props['name']);
+        if(isset($props['email'])) {
+            $conditions['email'] = $this->makeString($props['email']);
         }
    
         $flag = true;
