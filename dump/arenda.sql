@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июл 29 2019 г., 12:17
+-- Время создания: Авг 02 2019 г., 17:17
 -- Версия сервера: 5.6.43
 -- Версия PHP: 7.1.22
 
@@ -40,14 +40,6 @@ CREATE TABLE `contracts` (
   `payment_zone` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `contracts`
---
-
-INSERT INTO `contracts` (`id`, `user_id`, `name`, `price`, `discount`, `date_opening`, `date_closure`, `discount_payment_zone`, `payment_zone`) VALUES
-(34, 8, 'Тестовый договор', 10000, 5, '2019-05-22', '2020-07-25', '5', '10'),
-(35, 8, 'contract', 20000, 10, '2019-07-24', '2020-07-24', '5', '10');
-
 -- --------------------------------------------------------
 
 --
@@ -62,13 +54,6 @@ CREATE TABLE `invoices` (
   `specific_amount` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `invoices`
---
-
-INSERT INTO `invoices` (`id`, `contract_id`, `date`, `amount`, `specific_amount`) VALUES
-(30, 34, '2019-06-01', 3226, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -82,13 +67,6 @@ CREATE TABLE `payments` (
   `payt` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `payments`
---
-
-INSERT INTO `payments` (`id`, `contract_id`, `date`, `payt`) VALUES
-(16, 34, '2019-06-01', 10000);
-
 -- --------------------------------------------------------
 
 --
@@ -97,15 +75,20 @@ INSERT INTO `payments` (`id`, `contract_id`, `date`, `payt`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(128) DEFAULT NULL
+  `name` varchar(128) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`) VALUES
-(8, 'test');
+INSERT INTO `users` (`id`, `name`, `address`, `city`, `email`, `password`, `phone`) VALUES
+(18, 'Тестовый пользователь', 'Северная 324 Г', 'Краснодар', 'test@test.ru', '$2y$10$NePFwptW263xTxCaShLr7.JCYE7Y4hU3VQts3ZhQ8nEc72QaZgP3.', '8(900)3002010');
 
 --
 -- Индексы сохранённых таблиц
@@ -143,25 +126,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `contracts`
 --
 ALTER TABLE `contracts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT для таблицы `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
