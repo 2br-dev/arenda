@@ -94,11 +94,13 @@ class Contracts
         $conditions = [
             'user_id' => null,
             'name' => null,
+            'price' => null,
+            'discount' => null,
             'discount_payment_zone' => 5, // по умолчанию
-            'payment_zone' => 10 // по умолчанию
+            'payment_zone' => 10, // по умолчанию
+            'date_opening' => null,
+            'date_closure' => null
         ];
-        $conditions['date_opening'] = date('Y-m-d'); // по умолчанию
-        $conditions['date_closure'] = date('Y-m-t', strtotime('+12 months', strtotime($conditions['date_opening']))); // по умолчанию на 12 месяцев
 
         if(isset($props['user_id'])) {
             $conditions['user_id'] = $this->makeInt($props['user_id']);
@@ -108,7 +110,6 @@ class Contracts
         } else {
             return 0;
         }
-        
         if(isset($props['name'])) {
             $conditions['name'] = $this->makeString($props['name']);
             if(is_null($conditions['name'])) {
@@ -118,43 +119,54 @@ class Contracts
             return 0;
         }
         
-        if(isset($props['length'])) {
-            if(strlen($props['length'])) {
-                $conditions['length'] = $this->makeInt($props['length']);
-            }
-        }
-        
         if(isset($props['discount_payment_zone'])) {
             if((int) $props['discount_payment_zone'] !== 0) {
                 $conditions['discount_payment_zone'] = $this->makeInt($props['discount_payment_zone']);
+            } else {
+                return 0;
             }
+        } else {
+            return 0;
         }
         
         if(isset($props['payment_zone'])) {
             if((int) $props['payment_zone'] !== 0) {
                 $conditions['payment_zone'] = $this->makeInt($props['payment_zone']);
+            } else {
+                return 0;
             }
+        } else {
+            return 0;
         }
         // если зона дисконта превышает зону оплаты
         if($conditions['discount_payment_zone'] >= $conditions['payment_zone']) {
             return 0;
-        }
+        } 
         
         if(isset($props['date_opening'])) {
-            $conditions['date_opening'] = $this->makeDate($props['date_opening']);
-            if(is_null($conditions['date_opening'])) {
-               return 0; 
-            }
-            $conditions['date_closure'] = date('Y-m-t', strtotime('+12 months', strtotime($conditions['date_opening']))); // по умолчанию на 12 месяцев
+            $conditions['date_opening'] = date('Y-m-d', strtotime($props['date_opening']));
+        } else {
+            return 0;
         }
-        
+
         if(isset($props['date_closure'])) {
-            $conditions['date_closure'] = $this->makeDate($props['date_closure']);
-            if(is_null($conditions['date_closure'])) {
-               return 0; 
-            }
+            $conditions['date_closure'] = date('Y-m-d', strtotime($props['date_closure']));
+        } else {
+            return 0;
         }
-        
+
+        if(isset($props['price'])) {
+            $conditions['price'] = (double) $props['price'];
+        } else {
+            return 0;
+        }
+
+        if(isset($props['discount'])) {
+            $conditions['discount'] = (double) $props['discount'];
+        } else {
+            return 0;
+        }
+                        
         if($this->isExistContract($conditions)) {
             return 0;
         }
@@ -192,113 +204,6 @@ class Contracts
             return 0;
         }
         return 1;
-    }
-
-
-    /** Устанавливает стоимость за расчетный период 
-     * @param double $price
-     * @return int
-    */
-    public function setPrice($price)
-    {
-        if(is_null($this->contractId)) {
-            return 0;
-        }
-        
-        if(!is_null($price)) {
-            $price = $this->makeDouble($price);
-            if(is_null($price)) {
-                return 0;
-            }
-        } else {
-            return 0;
-        } 
-         
-        if(!$this->isExistContract(['id' => $this->contractId])) {
-            return 0;
-        }
-        
-        $query = 'UPDATE ' . self::$table . ' SET price = :price WHERE id = :id';
-        $params = [
-            ':id' => $this->contractId,
-            ':price' => $price,
-        ];
-        $stmt = $this->DB->prepare($query);
-        if(!$stmt->execute($params)) {
-            return 0;
-        } 
-
-        return 1;
-    }
-
-
-    /** Устанавливает скидку на цену за расчетный период 
-     * @param double $discount
-     * @return int 
-    */
-    public function setDiscount($discount)
-    {
-        if(is_null($this->contractId)) {
-            return 0;
-        }
-        
-        if(!is_null($discount)) {
-            $discount = $this->makeDouble($discount);
-            if(is_null($discount)) {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
-        
-        if(!$this->isExistContract(['id' => $this->contractId])) {
-            return 0;
-        }
-        
-        $query = 'UPDATE ' . self::$table . ' SET discount = :discount WHERE id = :id';
-        $params = [
-            ':id' => $this->contractId,
-            ':discount' => $discount,
-        ];
-        $stmt = $this->DB->prepare($query);
-        if(!$stmt->execute($params)) {
-            return 0;
-        } 
-
-        return 1;
-    }
-
-
-    /** Возвращает расчитанную стоимость за расчетный период с учетом скидки
-     * @return double
-    */
-    public function getCost() 
-    {
-        if(is_null($this->contractId)) {
-            return null;
-        }
-        
-        if(!$this->isExistContract(['id' => $this->contractId])) {
-            return null;
-        }
-        
-        $query = 'SELECT price, discount FROM ' . self::$table . ' WHERE id = :id';
-        $params = [
-            ':id' => $this->contractId
-        ];
-        
-        $stmt = $this->DB->prepare($query);
-        if(!$stmt->execute($params)) {
-            return null;
-        } 
-        $response = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $response = array_shift($response);
-        
-        $price = (double) $response['price'];
-        $discount = (double) $response['discount'];
-        
-        return $price - $price * $discount / 100;
     }
 
 
