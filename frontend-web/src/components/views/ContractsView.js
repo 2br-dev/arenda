@@ -75,6 +75,12 @@ const Add = ({users, submit, error}) => {
             <div className="add__box">
                 <input id="addDiscount" type="text" className="add__input" placeholder='Процент дисконта (от 0 до 100, дробь через < . >)*'/>
             </div>
+            <div className="add__box">
+                <input id="addPaymentZone" type="text" className="add__input" placeholder='Длинна платежного периода (с даты выставления счета до конца последнего дня)*'/>
+            </div>
+            <div className="add__box">
+                <input id="addDiscountZone" type="text" className="add__input" placeholder='Длинна дисконтного периода (с даты выставления счета до конца последнего дня)*'/>
+            </div>
             <div className="add__box-submit">
                 <button className="add__submit">Добавить договор</button>
             </div>

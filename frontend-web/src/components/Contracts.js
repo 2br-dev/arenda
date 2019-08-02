@@ -25,10 +25,12 @@ class Contracts extends React.Component {
         let errors = []
         let isValid = true
         
-        const userId      = document.getElementById('addSelect').value
-        const name        = document.getElementById('addName').value.trim()
-        const price    = parseFloat(document.getElementById('addPrice').value.trim())
-        const discount = parseFloat(document.getElementById('addDiscount').value.trim())
+        const userId        = document.getElementById('addSelect').value
+        const name          = document.getElementById('addName').value.trim()
+        const price         = parseFloat(document.getElementById('addPrice').value.trim())
+        const discount      = parseFloat(document.getElementById('addDiscount').value.trim())
+        const payment_zone  = Number(document.getElementById('addPaymentZone').value.trim())
+        const discount_zone = Number(document.getElementById('addDiscountZone').value.trim())
         
         let dateTo   = document.getElementById('addDateTo').value.trim().split('-')
         dateTo = `${dateTo[2]}-${dateTo[1]}-${dateTo[0]}`
@@ -61,6 +63,14 @@ class Contracts extends React.Component {
             errors.push('Не корректный процент дисконта')
             isValid = false
         }       
+        if(isNaN(payment_zone)) {
+            errors.push('Не корректный платежный период')
+            isValid = false
+        }
+        if(isNaN(discount_zone)) {
+            errors.push('Не корректный дисконтный период')
+            isValid = false
+        }       
         
         if(errors.length > 0) {
             this.setState({addError: errors.join(' | ')})
@@ -71,10 +81,12 @@ class Contracts extends React.Component {
         const Data = new FormData()
         Data.append('user_id', userId)
         Data.append('name', name)
-        Data.append('date_to', dateTo)
-        Data.append('date_from', dateFrom)
         Data.append('price', price)
         Data.append('discount', discount)
+        Data.append('discount_payment_zone', discount)
+        Data.append('payment_zone', discount)
+        Data.append('date_opening', dateTo)
+        Data.append('date_closure', dateFrom)
         
         if(isValid) {
             const URL = `${BACKEND}addContract`
