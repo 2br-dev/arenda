@@ -83,8 +83,8 @@ class Contracts extends React.Component {
         Data.append('name', name)
         Data.append('price', price)
         Data.append('discount', discount)
-        Data.append('discount_payment_zone', discount)
-        Data.append('payment_zone', discount)
+        Data.append('discount_payment_zone', discount_zone)
+        Data.append('payment_zone', payment_zone)
         Data.append('date_opening', dateTo)
         Data.append('date_closure', dateFrom)
         
@@ -103,8 +103,10 @@ class Contracts extends React.Component {
                         this.setState({addError: ''})
                         this.update()
                     } else {
-                        this.setState({addError: 'Договор с таким наименованием уже существует у данного пользователя'})
+                        this.setState({addError: 'Ошибка при занесении в БД'})
                     }
+                    console.log(response);
+                    
                 })   
         }
     }
