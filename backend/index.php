@@ -10,6 +10,7 @@ require_once CLASSES . 'Payments.php';
 require_once CLASSES . 'Balance.php';
 require_once CLASSES . 'Computation.php';
 require_once CLASSES . 'PrepareDate.php';
+require_once CLASSES . 'Rooms.php';
 
 require_once API_RENDER;
 
