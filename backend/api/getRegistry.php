@@ -23,6 +23,7 @@ function parseContracts($userId)
 {
     $result = [];
     $contracts = new Contracts();
+    $Balance = new Balance();
     $DATE = new PrepareDate();
     $userContracts = $contracts->getContract($userId);
     foreach ($userContracts as $userContract) {
@@ -31,6 +32,7 @@ function parseContracts($userId)
         $result[] = [
             'id' => (int) $userContract['id'],
             'name' => $userContract['name'],
+            'balance' => $Balance->getBalance($userContract['id']),
             'dateOpening' => $DATE->prepare($userContract['date_opening']),
             'dateClosure' => $DATE->prepare($userContract['date_closure']),
             'status' => ($today > $dateClosure) ? 0 : 1,
