@@ -101,53 +101,31 @@ class Invoices
             'specific_amount' => null, // по умолчанию
         ];
 
-        if(isset($props['contract_id'])) {
-            $conditions['contract_id'] = $this->makeInt($props['contract_id']);
-            if(is_null($conditions['contract_id'])) {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
-        
-        if(isset($props['year'])) {
-            if(is_null($this->makeInt($props['year']))) {
-                return 0;
-            }
+        if(!is_null($props['contract_id'])) {
+            $conditions['contract_id'] = $props['contract_id'];
         } else {
             return 0;
         }
 
-        if(isset($props['month'])) {
-            if(is_null($this->makeInt($props['month']))) {
-                return 0;
-            }
+        if(!is_null($props['date'])) {
+            $conditions['date'] = $props['date'];
         } else {
             return 0;
         }
 
-        $conditions['date'] = $this->createDate($props['year'], $props['month']);
-        if(is_null($conditions['date'])) {
-            return 0;
-        }
-        
-        if(isset($props['amount'])) {
-            $conditions['amount'] = $this->makeDouble($props['amount']);
-            if(is_null($conditions['amount']) || $conditions['amount'] == 0) {
-                $conditions['amount'] = null;
-                $conditions['specific_amount'] = null;
-            }
+        if(!is_null($props['amount'])) {
+            $conditions['amount'] = $props['amount'];
         } else {
             $contract = new Contracts($conditions['contract_id']);
             $thisContract = array_shift( $contract->getContract() );
             $dateOpening =  $this->makeUnix($thisContract['date_opening']);
             $dateThisInvoice = $this->makeUnix($conditions['date']);
-            
+
             if($this->isNotFullMonth($dateOpening, $dateThisInvoice)) {
                 $conditions['amount'] = $this->getPartialAmount((double) $thisContract['price'], $dateThisInvoice, $dateOpening);
                 $conditions['specific_amount'] = 1;
             }
-            
+
             if(is_null($conditions['specific_amount'])) {
                 $price = (double) $thisContract['price'];
                 
@@ -158,8 +136,6 @@ class Invoices
                 $conditions['amount'] = $price;
             }
         }
-        
-        
 
         if($this->isExistinvoice($conditions)) {
             return 0;
