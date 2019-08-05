@@ -67,13 +67,13 @@ class Balance
             $invoicePaymentZone = $this->addToDate($invoiceDate, $contractConditions['paymentZone']);
             $invoiceDiscountZone = $this->addToDate($invoiceDate, $contractConditions['discountZone']);
 
-            $specificInvoiceAmount = (double) $invoice['specific_amount']; // сумма счета за месяц без дисконта
+            $specificInvoiceAmount = $invoice['specific_amount']; // сумма счета за месяц без дисконта
             $invoiceAmountFull     = (double) $invoice['amount']; // сумма счета за месяц без дисконта
             $invoiceAmountDiscount = $this->getAmountWithDiscount($invoiceAmountFull, $contractConditions['discountValue']); // сумма счета за месяц с дисконтом
             if($invoiceAmountFull !== $contractConditions['priceValue'] && is_null($specificInvoiceAmount)) { // если сумма отличается от прописанной в договоре, то С ДИСКОНТОМ === БЕЗ ДИСКОНТА
                 $invoiceAmountDiscount = (double) $invoice['amount']; 
             }
-            
+
             $tempAmountFull    = $invoiceAmountFull;     // для получения разности без дисконта
             $tempAmountDiscont = $invoiceAmountDiscount; // для получения разности с дисконтом
             
