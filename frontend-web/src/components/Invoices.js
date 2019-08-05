@@ -11,14 +11,50 @@ class Invoices extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            addError: ''
-        }
+        this.state = {}
     }
 
-    addSubmit(e) {
+    submit(e) {
         e.preventDefault()
         
+        let date = new Date(document.getElementById('date').value)
+        date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+        
+        let invoices = []
+        document.querySelectorAll('.invoices__item').forEach(item =>{           
+            if(item.querySelector('.invoices__check').checked) {
+                invoices.push({
+                    id:     Number(item.querySelector('.invoices__check').value),
+                    amount: Number(item.querySelector('.invoices__amount').value.trim())
+                })
+            }
+        })
+
+        if(invoices.length > 0) {
+            invoices = JSON.stringify(invoices)
+           
+            const Data = new FormData()
+            Data.append('date', date)
+            Data.append('invoices', invoices)  
+
+            const URL = `${BACKEND}addInvoice`
+            const OPTIONS = {
+                mode: 'cors',
+                method: 'POST',
+                body: Data
+            }
+
+            fetch(URL, OPTIONS)
+                .then(response => response.json())
+                .then(response => {
+                    if(response === 1) {
+                        this.setState({addError: ''})
+                        this.update()
+                    } else {
+                        this.setState({addError: 'Ошибка при занесении в БД'})
+                    }                    
+                }) 
+        }
     }
 
     update() {
@@ -30,11 +66,8 @@ class Invoices extends React.Component {
     render() {
         return (
             <InvoicesView
-                users={this.props.users}
                 contracts={this.props.contracts}
-                invoices={this.props.invoices}
-                addSubmit={this.addSubmit.bind(this)}
-                addError={this.state.addError}
+                submit={this.submit.bind(this)}
             />
         )
     }
@@ -42,9 +75,7 @@ class Invoices extends React.Component {
 
 
 const mapStateToProps = state => ({
-    users: state.dashboard.users,
-    contracts: state.dashboard.contracts,
-    invoices: state.dashboard.invoices
+    contracts: state.dashboard.contracts
 })
 
 const mapDispatchToProps = dispatch => ({

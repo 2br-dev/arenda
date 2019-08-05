@@ -11,13 +11,14 @@ const InvoicesView = props => {
     return (
         <div className="content">
             <div className="content__body __center">
-                <Add 
+                {/* <Add 
                     users={props.users} 
                     contracts={props.contracts} 
                     submit={props.addSubmit} 
                     error={props.addError}
-                />
-                <List contracts={props.contracts}/>
+                /> */}
+                {/* <List contracts={props.contracts}/> */}
+                <InvoicesList contracts={props.contracts} submit={props.submit}/>
             </div>
         </div>
     )
@@ -35,7 +36,7 @@ const Add = ({users, contracts, submit, error}) => {
 
     return (
         <form className="add" onSubmit={submit}>
-            <p className="add__title">Выставить счет</p>
+            <p className="add__title">Выставить счета</p>
             <div className="add__box">
                 <label htmlFor="addSelect" className="add__label">Выберете договор из списка:</label>
                 <select id="addContract" className="add__select">
@@ -81,3 +82,34 @@ function addError(value) {
     }
     return temp
 } 
+
+const InvoicesList = ({contracts, submit}) => {
+
+    const [date, setDate] = useState(new Date())
+
+    return (
+        <form className="invoices" onSubmit={submit}>
+            <p className="invoices__title">Выставление счетов</p>
+            <div className="invoices__date">
+                <DatePicker
+                    selected={date}
+                    onChange={setDate}
+                    dateFormat="MMMM yyyy"
+                    showMonthYearPicker
+                    className='add__input-date'
+                    id="date"
+                />
+            </div>
+            {contracts.map(contract =>
+                <div className="invoices__item">
+                    <input class="invoices__check" type="checkbox" value={contract.id} id={`contract_${contract.id}`}/>
+                    <label htmlFor={`contract_${contract.id}`} className="invoices__name">{contract.name}</label>
+                    <input type="text" className="invoices__amount" placeholder="Специальная стоимость"/>
+                </div>
+            )}
+            <div className="invoices__box-submit">
+                <button type="submit" className="invoices__submit">Выставить счета</button>
+            </div>
+        </form>
+    )
+}

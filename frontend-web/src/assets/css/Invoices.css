@@ -1,0 +1,70 @@
+.invoices {
+  border-radius: 5px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 0px #eee;
+}
+.invoices__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 40px 0;
+}
+.invoices__date {
+  margin: 0 0 40px 0;
+}
+.invoices__item {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: 0.2s;
+  border-radius: 0 5px 5px 0;
+  border-left: 5px solid #eee;
+}
+.invoices__item:hover {
+  background: #eee;
+}
+.invoices__check {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  outline: none;
+  margin: 0 20px 0 0;
+  flex-shrink: 0;
+}
+.invoices__name {
+  font-size: 20px;
+  flex-grow: 1;
+  color: #333;
+}
+.invoices__amount {
+  font-size: 16px;
+  padding: 5px;
+  color: #333;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  max-width: 200px;
+}
+.invoices__box-submit {
+  margin: 40px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.invoices__submit {
+  font-size: 16px;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  background-color: #1976d2;
+}
+.invoices__submit:hover {
+  color: #1976d2;
+  background: transparent;
+}

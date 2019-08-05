@@ -12,7 +12,7 @@ const HeaderView = props => {
                     <NavLink to="/" className="header__nav_link">Реестр</NavLink>
                     <NavLink to="/users" className="header__nav_link">Пользователи</NavLink>
                     <NavLink to="/contracts" className="header__nav_link">Договоры</NavLink>
-                    <NavLink to="/invoices" className="header__nav_link">Счета</NavLink>
+                    <NavLink to="/invoices" className="header__nav_link">Выставление счетов</NavLink>
                     <NavLink to="/payments" className="header__nav_link">Платежи</NavLink>
                 </nav>
                 <a className="header__btn">Выход</a>
