@@ -20,32 +20,15 @@ class Balance
     /** Возвращает баланс
      * @param int $userId
     */
-    public function getBalance($userId = null, $contractId = null) 
+    public function getBalance($contractId = null) 
     {
-        if(!is_null($userId)) {
-            $userId = $this->makeInt($userId);
-        } 
-        
         if(!is_null($contractId)) {
             $contractId = $this->makeInt($contractId);
-        } 
-        
-        if(is_null($userId) && is_null($contractId)) { // получено хотя бы одно из значений
+        } else {
             return null;
         }
-        
-        $balance = null;
-        
-        if(is_null($userId)) {
-            $balance = $this->getBalanseOfContract($contractId);
-        } else {
-            $Contracts = new Contracts();
-            foreach ($Contracts->getContract($userId) as $key => $contract) {
-                $balance += $this->getBalanseOfContract($contract['id']);
-            }
-        }
-        
-        return $balance;
+
+        return $this->getBalanseOfContract($contractId);
     }
 
 
