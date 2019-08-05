@@ -45,6 +45,10 @@ const ViewContracts = props => {
             <div className="registry__contract_box-flex">
                 <p className="registry__contract_name">{contract.name}</p>
                 <p className="registry__contract_date">{contract.dateOpening} / {contract.dateClosure}</p>
+                {contract.balance < 0
+                    ? <p className="registry__contract_balance registry__contract_balance-red">Баланс: {contract.balance}</p>
+                    : <p className="registry__contract_balance registry__contract_balance-green">Баланс: {contract.balance}</p>
+                }
                 {contract.status === 1 
                     ? <p className="registry__contract_status registry__contract_status-active">Активный</p>
                     : <p className="registry__contract_status registry__contract_status-no-active">Не активный</p>
