@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux'
 
-import { getUsers, getContracts, getInvoices, getPayments, getRegistry } from './../Update'
+import { getUsers, getContracts, getInvoices, getPayments, getRegistry, getRooms } from './../Update'
 import { resizer } from './../Resizer'
 
 import Registry from './Registry'
@@ -40,6 +40,9 @@ class App extends React.Component {
 		})
 		getRegistry().then(resolve => {
 			this.props.onUpdateRegistry(resolve)
+		})
+		getRooms().then(resolve => {
+			this.props.onUpdateRooms(resolve)
 		})
 	}
 
@@ -91,8 +94,11 @@ const mapDispatchToProps = dispatch => ({
         dispatch({ type: 'UPDATE_PAYMENTS', payload: payments })
     },
     onUpdateRegistry: registry => {
-        dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
-    }
+		dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
+    },
+	onUpdateRooms: rooms => {
+		dispatch({ type: 'UPDATE_ROOMS', payload: rooms })
+	},
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

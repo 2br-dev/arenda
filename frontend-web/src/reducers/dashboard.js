@@ -3,7 +3,8 @@ const initiaState = {
     users: [],
     contracts: [],
     invoices: [],
-    payments: []
+    payments: [],
+    rooms: []
 }
 
 
@@ -41,7 +42,12 @@ export default function dashboard(state = initiaState, action) {
                 payments: action.payload
             }         
         }
-
+        case "UPDATE_ROOMS":{
+            return {
+                ...state,
+                rooms: action.payload
+            }         
+        }
 
         default: {
             return state

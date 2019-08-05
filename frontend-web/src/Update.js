@@ -101,3 +101,23 @@ export function getRegistry() {
                 })
         })
 }
+
+
+export function getRooms() {
+        return new Promise((onFulfilled , onRejected ) => {
+            const URL = BACKEND + 'getRooms'
+            const OPTIONS = {
+                mode: 'cors'
+            }
+    
+            fetch(URL,OPTIONS)
+                .then(response => response.json())
+                .then(response => {
+                    if(response != null) {
+                        onFulfilled(response)
+                    } else {
+                        onRejected('ошибка сервера')
+                    }
+                })
+        })
+}
