@@ -26,6 +26,7 @@ class Contracts extends React.Component {
         let isValid = true
         
         const userId        = document.getElementById('addSelect').value
+        const roomId        = document.getElementById('addRoom').value
         const name          = document.getElementById('addName').value.trim()
         const price         = parseFloat(document.getElementById('addPrice').value.trim())
         const discount      = parseFloat(document.getElementById('addDiscount').value.trim())
@@ -41,6 +42,10 @@ class Contracts extends React.Component {
         
         if(userId === '') {
             errors.push('Не указан пользователь')
+            isValid = false
+        }
+        if(roomId === '') {
+            errors.push('Не указано помещение')
             isValid = false
         }
         if(name === '') {
@@ -76,6 +81,7 @@ class Contracts extends React.Component {
         
         const Data = new FormData()
         Data.append('user_id', userId)
+        Data.append('room_id', roomId)
         Data.append('name', name)
         Data.append('price', price)
         Data.append('discount', discount)
@@ -117,6 +123,7 @@ class Contracts extends React.Component {
         return (
             <ContractsView
                 users={this.props.users}
+                rooms={this.props.rooms}
                 contracts={this.props.contracts}
                 addSubmit={this.addSubmit.bind(this)}
                 addError={this.state.addError}
@@ -128,6 +135,7 @@ class Contracts extends React.Component {
 
 const mapStateToProps = state => ({
     users: state.dashboard.users,
+    rooms: state.dashboard.rooms,
     contracts: state.dashboard.contracts
 })
 

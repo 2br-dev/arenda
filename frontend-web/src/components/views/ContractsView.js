@@ -12,6 +12,7 @@ const ContractsView = props => {
             <div className="content__body __center">
                 <Add 
                     users={props.users} 
+                    rooms={props.rooms} 
                     submit={props.addSubmit} 
                     error={props.addError}
                 />
@@ -25,7 +26,7 @@ const ContractsView = props => {
 export default ContractsView
 
 
-const Add = ({users, submit, error}) => {
+const Add = ({users, rooms, submit, error}) => {
 
     const to = new Date()
     const from = new Date(to.getFullYear() + 1, to.getMonth(), to.getDate())
@@ -44,6 +45,14 @@ const Add = ({users, submit, error}) => {
                 <select id="addSelect" className="add__select">
                     {users.map(user =>
                         <option key={`user_${user.id}`} className="add__select_option" value={user.id}>{user.name}</option>
+                    )}
+                </select>
+            </div>
+            <div className="add__box">
+                <label htmlFor="addSelect" className="add__label">Выберете помещение из списка:</label>
+                <select id="addRoom" className="add__select">
+                    {rooms.map(room =>
+                        <option key={`user_${room.id}`} className="add__select_option" value={room.id}>{room.number}</option>
                     )}
                 </select>
             </div>
