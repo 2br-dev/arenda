@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 05 2019 г., 13:23
+-- Время создания: Авг 05 2019 г., 13:28
 -- Версия сервера: 5.6.43
 -- Версия PHP: 7.1.22
 
@@ -34,7 +34,7 @@ CREATE TABLE `contracts` (
   `name` varchar(256) NOT NULL,
   `price` float DEFAULT NULL,
   `discount` float DEFAULT NULL,
-  `room` varchar(255) DEFAULT NULL,
+  `room_id` varchar(255) DEFAULT NULL,
   `date_opening` date DEFAULT NULL,
   `date_closure` date DEFAULT NULL,
   `discount_payment_zone` varchar(2) DEFAULT NULL,
@@ -45,9 +45,10 @@ CREATE TABLE `contracts` (
 -- Дамп данных таблицы `contracts`
 --
 
-INSERT INTO `contracts` (`id`, `user_id`, `name`, `price`, `discount`, `room`, `date_opening`, `date_closure`, `discount_payment_zone`, `payment_zone`) VALUES
+INSERT INTO `contracts` (`id`, `user_id`, `name`, `price`, `discount`, `room_id`, `date_opening`, `date_closure`, `discount_payment_zone`, `payment_zone`) VALUES
 (42, 18, 'Тестовый договор', 10000, 5, NULL, '2019-04-17', '2020-08-31', '5', '10'),
-(43, 18, 'adfasdfadfadf', 1000, 1, NULL, '2019-08-05', '2020-08-05', '2', '10');
+(43, 18, 'adfasdfadfadf', 1000, 1, NULL, '2019-08-05', '2020-08-05', '2', '10'),
+(44, 18, 'adsgadgasdfasdf', 234124, 1, '33', '2019-08-05', '2020-08-05', '10', '12');
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `contracts`
 --
 ALTER TABLE `contracts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT для таблицы `invoices`

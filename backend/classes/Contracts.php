@@ -93,6 +93,7 @@ class Contracts
     {
         $conditions = [
             'user_id' => null,
+            'room_id' => null,
             'name' => null,
             'price' => null,
             'discount' => null,
@@ -105,6 +106,14 @@ class Contracts
         if(isset($props['user_id'])) {
             $conditions['user_id'] = $this->makeInt($props['user_id']);
             if(is_null($conditions['user_id'])) {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+        if(isset($props['room_id'])) {
+            $conditions['room_id'] = $this->makeInt($props['room_id']);
+            if(is_null($conditions['room_id'])) {
                 return 0;
             }
         } else {
