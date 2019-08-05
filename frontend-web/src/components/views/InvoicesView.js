@@ -18,7 +18,7 @@ const InvoicesView = props => {
                     error={props.addError}
                 /> */}
                 {/* <List contracts={props.contracts}/> */}
-                <InvoicesList contracts={props.contracts} submit={props.submit}/>
+                <InvoicesList contracts={props.contracts} submit={props.submit} clear={props.clear}/>
             </div>
         </div>
     )
@@ -83,7 +83,7 @@ function addError(value) {
     return temp
 } 
 
-const InvoicesList = ({contracts, submit}) => {
+const InvoicesList = ({contracts, submit, clear}) => {
 
     const [date, setDate] = useState(new Date())
 
@@ -101,10 +101,10 @@ const InvoicesList = ({contracts, submit}) => {
                 />
             </div>
             {contracts.map(contract =>
-                <div className="invoices__item">
-                    <input class="invoices__check" type="checkbox" value={contract.id} id={`contract_${contract.id}`}/>
+                <div className="invoices__item" key={`contract_${contract.id}`}>
+                    <input className="invoices__check" type="checkbox" value={contract.id} id={`contract_${contract.id}`} defaultChecked={clear}/>
                     <label htmlFor={`contract_${contract.id}`} className="invoices__name">{contract.name}</label>
-                    <input type="text" className="invoices__amount" placeholder="Специальная стоимость"/>
+                    <input type="text" className="invoices__amount" placeholder="Специальная стоимость" defaultValue={clear ? '' : ''}/>
                 </div>
             )}
             <div className="invoices__box-submit">

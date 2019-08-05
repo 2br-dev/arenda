@@ -18,7 +18,11 @@ class Invoices extends React.Component {
         e.preventDefault()
         
         let date = new Date(document.getElementById('date').value)
-        date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        month = (month < 10) ? `0${month}` : month
+        let day = '01'
+        date = `${year}-${month}-${day}`
         
         let invoices = []
         document.querySelectorAll('.invoices__item').forEach(item =>{           
@@ -48,13 +52,20 @@ class Invoices extends React.Component {
                 .then(response => response.json())
                 .then(response => {
                     if(response === 1) {
-                        this.setState({addError: ''})
                         this.update()
+                        this.clear()
                     } else {
-                        this.setState({addError: 'Ошибка при занесении в БД'})
+                        alert('ошибка')
                     }                    
                 }) 
         }
+    }
+
+    clear() {
+        document.querySelectorAll('.invoices__item').forEach(item =>{           
+            item.querySelector('.invoices__check').checked = false
+            item.querySelector('.invoices__amount').value = ''
+        })
     }
 
     update() {
@@ -68,6 +79,7 @@ class Invoices extends React.Component {
             <InvoicesView
                 contracts={this.props.contracts}
                 submit={this.submit.bind(this)}
+                clear={this.state.clear}
             />
         )
     }
