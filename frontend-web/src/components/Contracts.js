@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getContracts } from './../Update'
+import { getContracts, getRegistry } from './../Update'
 
 import ContractsView from './views/ContractsView'
 
@@ -116,6 +116,9 @@ class Contracts extends React.Component {
         getContracts().then(resolve => {
             this.props.onUpdateContracts(resolve)
         })
+        getRegistry().then(resolve => {
+			this.props.onUpdateRegistry(resolve)
+		})
     }
 
         
@@ -142,6 +145,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onUpdateContracts: contracts => {
         dispatch({ type: 'UPDATE_CONTRACTS', payload: contracts })
+    },
+    onUpdateRegistry: registry => {
+		dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
     }
 })
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getUsers } from './../Update'
+import { getUsers, getRegistry } from './../Update'
 
 import UsersView from './views/UsersView'
 
@@ -92,6 +92,9 @@ class Users extends React.Component {
         getUsers().then(resolve => {
             this.props.onUpdateUsers(resolve)
         })
+        getRegistry().then(resolve => {
+			this.props.onUpdateRegistry(resolve)
+		})     
     }
         
 
@@ -115,6 +118,9 @@ const mapDispatchToProps = dispatch => ({
     onUpdateUsers: users => {
         dispatch({ type: 'UPDATE_USERS', payload: users })
     },
+    onUpdateRegistry: registry => {
+		dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
+    }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users)

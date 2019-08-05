@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getInvoices } from './../Update'
+import { getInvoices, getRegistry } from './../Update'
 import InvoicesView from './views/InvoicesView'
 
 import { BACKEND } from './../path.js'
@@ -72,6 +72,9 @@ class Invoices extends React.Component {
         getInvoices().then(resolve => {
             this.props.onUpdateInvoices(resolve)
         })
+        getRegistry().then(resolve => {
+			this.props.onUpdateRegistry(resolve)
+		})  
     }
         
     render() {
@@ -93,6 +96,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onUpdateInvoices: invoices => {
         dispatch({ type: 'UPDATE_INVOICES', payload: invoices })
+    },
+    onUpdateRegistry: registry => {
+		dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
     }
 })
 
