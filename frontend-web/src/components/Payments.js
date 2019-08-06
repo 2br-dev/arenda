@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
+import { getPayments, getRegistry } from './../Update'
 import PaymentsView from './views/PaymentsView'
 
 import { BACKEND } from '../path.js'
@@ -10,30 +12,104 @@ class Payments extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            addError: '',
-            payments: []
+            errors: '',
+            userId: 1,
+            contractId: '',
+            contracts: []
         }
-        this.getPayments()
+    }
+    
+    
+    addSubmit(e) {
+        e.preventDefault()      
+        
+        let errors = []
+        let isValid = true
+        
+        const contractId    = document.getElementById('paymentsContract').value
+        const amount         = parseFloat(document.getElementById('peymentsAmount').value.trim())
+
+        let date   = document.getElementById('paymentsDate').value.trim().split('-')
+        date = `${date[2]}-${date[1]}-${date[0]}`       
+        console.log(contractId);
+        
+        if(contractId === '') {
+            errors.push('Не выбран договор')
+            isValid = false
+        }
+        if(isNaN(amount)) {
+            errors.push('Не указана сумма платежа')
+            isValid = false
+        }
+
+        this.setState({errors: errors.join(' | ')})
+        
+        const Data = new FormData()
+        Data.append('contract_id', contractId)
+        Data.append('amount', amount)
+        Data.append('date', date)
+
+        
+        if(isValid) {           
+            const URL = `${BACKEND}addPayment`
+            const OPTIONS = {
+                mode: 'cors',
+                method: 'POST',
+                body: Data
+            }
+
+            fetch(URL, OPTIONS)
+                .then(response => response.json())
+                .then(response => {
+                    if(response === 1) {
+                        this.setState({addError: ''})
+                        this.update()
+                    } else {
+                        this.setState({addError: 'Платеж существует'})
+                    }                    
+                })   
+        }
+          
     }
 
-    addSubmit(e) {
-        e.preventDefault()
-        
-    }
-        
-        
-    getPayments() {
-        
-        
+
+    update() {
+        getPayments().then(resolve => {
+            this.props.onUpdatePayments(resolve)
+        })
+        getRegistry().then(resolve => {
+			this.props.onUpdateRegistry(resolve)
+		}) 
     }
 
 
     render() {
         return (
-            <PaymentsView />
+            <PaymentsView 
+                users={this.props.users}
+                contracts={this.props.contracts}
+                errors={this.state.errors}
+                submit={this.addSubmit.bind(this)}
+            />
         )
     }
+
 }
 
 
-export default Payments
+const mapStateToProps = state => ({
+    users: state.dashboard.users,
+    rooms: state.dashboard.rooms,
+    contracts: state.dashboard.contracts
+})
+
+const mapDispatchToProps = dispatch => ({
+    onUpdatePayments: payments => {
+        dispatch({ type: 'UPDATE_PYMENTS', payload: payments })
+    },
+    onUpdateRegistry: registry => {
+		dispatch({ type: 'UPDATE_REGISTRY', payload: registry })
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payments)

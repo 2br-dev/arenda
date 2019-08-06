@@ -6,3 +6,125 @@
     padding: 10px;
   }
 }
+.payments {
+  border-radius: 5px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0px 0px 5px 0px #eee;
+}
+.payments__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 40px 0;
+}
+.payments__select {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  padding: 10px;
+}
+.payments__select_option {
+  font-size: 18px;
+}
+.payments__date {
+  margin: 0 0 40px 0;
+}
+.payments__item {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: 0.2s;
+  border-radius: 0 5px 5px 0;
+  border-left: 5px solid #eee;
+}
+.payments__item:hover {
+  background: #eee;
+}
+.payments__check {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  outline: none;
+  margin: 0 20px 0 0;
+  flex-shrink: 0;
+}
+.payments__name {
+  font-size: 20px;
+  flex-grow: 1;
+  color: #333;
+}
+.payments__amount {
+  font-size: 16px;
+  padding: 5px;
+  color: #333;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  max-width: 200px;
+}
+.payments__box {
+  margin: 20px 0 0 0;
+}
+.payments__box-submit {
+  margin: 40px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.payments__submit {
+  font-size: 16px;
+  padding: 10px 30px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  background-color: #1976d2;
+}
+.payments__submit:hover {
+  color: #1976d2;
+  background: transparent;
+}
+.payments__input-date {
+  display: block;
+  width: 390px;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+  margin: 0 20px 0 0;
+}
+.payments__input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 2px solid #1976d2;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+}
+.payments__error {
+  display: none;
+  opacity: 0;
+  font-size: 18px;
+  color: #c41e3a;
+  transition: 0.5s;
+  text-align: right;
+  margin: 20px 0 0 0;
+}
+.payments__error-visible {
+  display: block;
+  opacity: 1;
+}

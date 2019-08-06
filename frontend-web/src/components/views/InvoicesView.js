@@ -11,13 +11,6 @@ const InvoicesView = props => {
     return (
         <div className="content">
             <div className="content__body __center">
-                {/* <Add 
-                    users={props.users} 
-                    contracts={props.contracts} 
-                    submit={props.addSubmit} 
-                    error={props.addError}
-                /> */}
-                {/* <List contracts={props.contracts}/> */}
                 <InvoicesList contracts={props.contracts} submit={props.submit} clear={props.clear}/>
             </div>
         </div>

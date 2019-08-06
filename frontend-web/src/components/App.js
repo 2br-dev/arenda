@@ -22,10 +22,11 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {}
+		this.update()
 	}
 
 
-	componentWillMount() {
+	update() {
 		getUsers().then(resolve => {
 			this.props.onUpdateUsers(resolve)
 		})
