@@ -64,12 +64,18 @@ class Payments extends React.Component {
                     if(response === 1) {
                         this.setState({addError: ''})
                         this.update()
+                        this.clear()
                     } else {
                         this.setState({addError: 'Платеж существует'})
                     }                    
                 })   
         }
           
+    }
+
+    
+    clear() {       
+        document.getElementById('peymentsAmount').value = ''
     }
 
 
