@@ -73,7 +73,7 @@ const Add = ({users, contracts, errors, submit}) => {
                 />  
                 </div>
                 <div className="payments__box">
-                    <input id="peymentsAmount" type="text" className="payments__input" placeholder="Сумма платежа"/>
+                    <input id="peymentsPayt" type="text" className="payments__input" placeholder="Сумма платежа"/>
                 </div>
                 <div className="payments__box-submit">
                     <button type="submit" className="payments__submit">Добавить платеж</button>

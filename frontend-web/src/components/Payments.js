@@ -27,7 +27,7 @@ class Payments extends React.Component {
         let isValid = true
         
         const contractId    = document.getElementById('paymentsContract').value
-        const amount         = parseFloat(document.getElementById('peymentsAmount').value.trim())
+        const payt         = parseFloat(document.getElementById('peymentsPayt').value.trim())
 
         let date   = document.getElementById('paymentsDate').value.trim().split('-')
         date = `${date[2]}-${date[1]}-${date[0]}`       
@@ -37,7 +37,7 @@ class Payments extends React.Component {
             errors.push('Не выбран договор')
             isValid = false
         }
-        if(isNaN(amount)) {
+        if(isNaN(payt)) {
             errors.push('Не указана сумма платежа')
             isValid = false
         }
@@ -46,7 +46,7 @@ class Payments extends React.Component {
         
         const Data = new FormData()
         Data.append('contract_id', contractId)
-        Data.append('amount', amount)
+        Data.append('payt', payt)
         Data.append('date', date)
 
         
