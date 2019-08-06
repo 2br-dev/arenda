@@ -111,10 +111,7 @@ class Payments
         }
         
         if(isset($props['date'])) {
-            $conditions['date'] = $this->makeDate($props['date']);
-            if(is_null($conditions['date'])) {
-                return 0;
-            }
+            $conditions['date'] = $props['date'];
         } else {
             return 0;
         }

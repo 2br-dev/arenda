@@ -31,7 +31,6 @@ class Payments extends React.Component {
 
         let date   = document.getElementById('paymentsDate').value.trim().split('-')
         date = `${date[2]}-${date[1]}-${date[0]}`       
-        console.log(contractId);
         
         if(contractId === '') {
             errors.push('Не выбран договор')
@@ -75,7 +74,7 @@ class Payments extends React.Component {
 
     
     clear() {       
-        document.getElementById('peymentsAmount').value = ''
+        document.getElementById('peymentsPayt').value = ''
     }
 
 
