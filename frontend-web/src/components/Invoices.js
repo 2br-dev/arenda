@@ -11,7 +11,9 @@ class Invoices extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            complete: false
+        }
     }
 
     submit(e) {
@@ -54,6 +56,7 @@ class Invoices extends React.Component {
                     if(response === 1) {
                         this.update()
                         this.clear()
+                        this.complete()
                     } else {
                         alert('ошибка')
                     }                    
@@ -66,6 +69,14 @@ class Invoices extends React.Component {
             item.querySelector('.invoices__check').checked = false
             item.querySelector('.invoices__amount').value = ''
         })
+    }
+        
+    complete() {
+        this.setState({complete: true})
+        const func = () => {
+            this.setState({complete: false})
+        }
+        setTimeout(func.bind(this), 1500)
     }
 
     update() {
@@ -83,6 +94,7 @@ class Invoices extends React.Component {
                 contracts={this.props.contracts}
                 submit={this.submit.bind(this)}
                 clear={this.state.clear}
+                complete={this.state.complete}
             />
         )
     }

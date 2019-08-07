@@ -14,7 +14,7 @@ class Contracts extends React.Component {
         super(props)
         this.state = {
             addError: '',
-            update: 0
+            complete: false
         }
     }
 
@@ -103,12 +103,31 @@ class Contracts extends React.Component {
                 .then(response => {
                     if(response === 1) {
                         this.setState({addError: ''})
+                        this.complete()
+                        this.clear()
                         this.update()
                     } else {
                         this.setState({addError: 'Ошибка при занесении в БД'})
                     }                    
                 })   
         }
+    }
+
+
+    clear() {
+        document.getElementById('addName').value = ''
+        document.getElementById('addPrice').value = ''
+        document.getElementById('addDiscount').value = ''
+        document.getElementById('addPaymentZone').value = ''
+        document.getElementById('addDiscountZone').value = ''
+    }
+        
+    complete() {
+        this.setState({complete: true})
+        const func = () => {
+            this.setState({complete: false})
+        }
+        setTimeout(func.bind(this), 1500)
     }
 
 
@@ -130,6 +149,7 @@ class Contracts extends React.Component {
                 contracts={this.props.contracts}
                 addSubmit={this.addSubmit.bind(this)}
                 addError={this.state.addError}
+                complete={this.state.complete}
             />
         )
     }

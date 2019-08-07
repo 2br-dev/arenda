@@ -13,9 +13,7 @@ class Payments extends React.Component {
         super(props)
         this.state = {
             errors: '',
-            userId: 1,
-            contractId: '',
-            contracts: []
+            complete: false
         }
     }
     
@@ -64,6 +62,7 @@ class Payments extends React.Component {
                         this.setState({addError: ''})
                         this.update()
                         this.clear()
+                        this.complete()
                     } else {
                         this.setState({addError: 'Платеж существует'})
                     }                    
@@ -75,6 +74,14 @@ class Payments extends React.Component {
     
     clear() {       
         document.getElementById('peymentsPayt').value = ''
+    }
+        
+    complete() {
+        this.setState({complete: true})
+        const func = () => {
+            this.setState({complete: false})
+        }
+        setTimeout(func.bind(this), 1500)
     }
 
 
@@ -94,6 +101,7 @@ class Payments extends React.Component {
                 users={this.props.users}
                 contracts={this.props.contracts}
                 errors={this.state.errors}
+                complete={this.state.complete}
                 submit={this.addSubmit.bind(this)}
             />
         )

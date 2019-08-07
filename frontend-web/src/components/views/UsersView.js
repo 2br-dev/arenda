@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 
+import Complete from './Complete'
 
 import './../../assets/css/Users.css'
 
@@ -8,26 +9,18 @@ import './../../assets/css/Users.css'
 const UsersView = props => {    
     return (
         <div className="content">
-            <UserMain addSubmit={props.addSubmit} addError={props.addError} users={props.users}/>
+            <Add 
+                submit={props.addSubmit} 
+                error={props.addError}
+                />
+            <List users={props.users}/>
+            <Complete isVisible={props.complete} text={'Пользователь успешно добавлен'} />
         </div>
     )
 }
 
 
 export default UsersView
-
-
-const UserMain = props => {
-    return (
-        <div className="content__body __center">
-            <Add 
-                submit={props.addSubmit} 
-                error={props.addError}
-                />
-            <List users={props.users}/>
-        </div>
-    )
-}
 
 
 const Add = ({error, submit}) => {

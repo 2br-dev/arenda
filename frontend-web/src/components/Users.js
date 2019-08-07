@@ -13,7 +13,8 @@ class Users extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            addError: ''
+            addError: '',
+            complete: false
         }
     }
 
@@ -79,12 +80,31 @@ class Users extends React.Component {
                 .then(response => {
                     if(response === 1) {
                         this.setState({addError: ''})
+                        this.complete()
+                        this.clear()
                         this.update()
                     } else {
                         this.setState({addError: 'Пользователь с таким email уже существует'})
                     }
                 })   
         }      
+    }
+
+    clear() {
+        document.getElementById('addName').value = ''
+        document.getElementById('addCity').value = ''
+        document.getElementById('addAddress').value = ''
+        document.getElementById('addPhone').value = ''
+        document.getElementById('addEmail').value = ''
+        document.getElementById('addPassword').value = ''
+    }
+        
+    complete() {
+        this.setState({complete: true})
+        const func = () => {
+            this.setState({complete: false})
+        }
+        setTimeout(func.bind(this), 1500)
     }
 
 
@@ -103,6 +123,7 @@ class Users extends React.Component {
             <UsersView
                 addSubmit={this.addSubmit.bind(this)}
                 addError={this.state.addError}
+                complete={this.state.complete}
                 users={this.props.users}
             />
         )

@@ -1,5 +1,7 @@
 import React, { useState }from 'react'
 
+import Complete from './Complete'
+
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,6 +14,7 @@ const InvoicesView = props => {
         <div className="content">
             <div className="content__body __center">
                 <InvoicesList contracts={props.contracts} submit={props.submit} clear={props.clear}/>
+                <Complete isVisible={props.complete} text={'Счета успешно выставлены '} />
             </div>
         </div>
     )

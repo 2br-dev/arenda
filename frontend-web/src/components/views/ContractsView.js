@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import Complete from './Complete'
+
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,6 +19,7 @@ const ContractsView = props => {
                     error={props.addError}
                 />
                 <List contracts={props.contracts}/>
+                <Complete isVisible={props.complete} text={'Договор успешно добавлен'} />
             </div>
         </div>
     )

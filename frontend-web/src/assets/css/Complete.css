@@ -1,0 +1,19 @@
+.complete__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background: #fff;
+  opacity: 0.95;
+  align-items: center;
+  justify-content: center;
+}
+.complete__overlay-visible {
+  display: flex;
+}
+.complete__text {
+  font-size: 20px;
+  font-weight: 700;
+}
