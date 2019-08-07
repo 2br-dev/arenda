@@ -273,49 +273,6 @@ class Computation
                     
                     break;
                 }
-                // -----------------------------------
-                case $drivers[1]: {
-                    if(!empty($payments)) {
-                        while(true) {
-                            if(empty($payments)) { // опустел массив с платежами платежи
-                                $lastPayment = true;  // баланс уйдет в минус
-                                break; // выход из while
-                            }
-
-                            $payment = array_shift($payments); // забирает оплату из массива для обработки
-                            
-                            $lastPaymentDate = $this->makeUnix($payment['date']); // дата оплаты
-                            $payt = (double) $payment['payt']; // сумма оплаты
-                            
-                            // оплата по дисконту или нет
-                            $discontFlag = $this->isDiscountPayt($lastPaymentDate, $invoiceDiscountZone);
-                            
-                            if($this->paytComplete($discontFlag, $payt, $tempAmount, $tempAmountDiscount)) {
-                                break;
-                            }
-                            
-                            $tempAmount        -= $payt; // если одной оплаты мало для погашения, то используется накопитель
-                            $tempAmountDiscont -= $payt; // если одной оплаты мало для погашения, то используется накопитель
-                        }
-                    } 
-                    
-                    if($lastPayment || empty($payments)) {
-                        if($lastPaymentDate <= $invoiceDiscountZone) { // если дата последней оплаты раньше или равна дисконтной зоне текущего счета
-                            if($dateToday <= $invoiceDiscountZone || $paymentSum - $invoiceAmountDiscount >= 0) { // если сегодняшняя дата в рамках дисконтной зоны текущего счета ИЛИ на баласе достаточно средств для погашения текущего счета
-                                $discontFlag = true;
-                            }
-                        }
-                    }
-                    
-                    if($discontFlag) { // если попадаем в дисконтную зону
-                        $paymentSum -= $invoiceAmountDiscount; // от общей суммы отнимаем сумму с дисконтом
-                    } else {
-                        $paymentSum -= $invoiceAmount; // от общей суммы отнимаем сумму без дисконтом
-                    } 
-
-                    return $paymentSum;
-                    break;
-                }
             }
             //-------------------------------------------
         }
